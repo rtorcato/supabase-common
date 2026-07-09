@@ -40,8 +40,9 @@ const config: Config = {
 			{
 				docs: {
 					sidebarPath: './sidebars.ts',
-					// Docs own the site root; no separate marketing landing page.
-					routeBasePath: '/',
+					// The marketing landing (src/pages/index.tsx) owns '/', so docs
+					// live under '/docs'.
+					routeBasePath: '/docs',
 					editUrl: 'https://github.com/rtorcato/supabase-common/edit/main/apps/docs/',
 				},
 				blog: false,
@@ -84,8 +85,7 @@ const config: Config = {
 				hashed: true,
 				indexDocs: true,
 				indexBlog: false,
-				// Docs are served from the site root (routeBasePath '/').
-				docsRouteBasePath: '/',
+				docsRouteBasePath: '/docs',
 				highlightSearchTermsOnTargetPage: true,
 				searchBarShortcutHint: false,
 			},
@@ -109,7 +109,7 @@ const config: Config = {
 				height: 26,
 			},
 			items: [
-				{ to: '/', position: 'left', label: 'Docs', activeBasePath: '/' },
+				{ to: '/docs', position: 'left', label: 'Docs' },
 				{
 					type: 'dropdown',
 					label: 'Projects',
@@ -134,9 +134,9 @@ const config: Config = {
 				{
 					title: 'Documentation',
 					items: [
-						{ label: 'Installation', to: '/guides/installation' },
-						{ label: 'Usage', to: '/guides/usage' },
-						{ label: 'Changelog', to: '/changelog' },
+						{ label: 'Installation', to: '/docs/guides/installation' },
+						{ label: 'Usage', to: '/docs/guides/usage' },
+						{ label: 'Changelog', to: '/docs/changelog' },
 					],
 				},
 				{

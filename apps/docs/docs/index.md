@@ -2,7 +2,6 @@
 title: supabase-common
 description: Shared, tree-shakeable TypeScript helpers for Supabase.
 sidebar_position: 0
-slug: /
 ---
 
 # supabase-common
@@ -37,4 +36,4 @@ import { unwrap } from '@rtorcato/supabase-common'
 const user = unwrap(await supabase.from('users').select().eq('id', id).single())
 ```
 
-Next: [install it](/guides/installation) and read the [usage guide](/guides/usage).
+Next: [install it](/docs/guides/installation) and read the [usage guide](/docs/guides/usage).

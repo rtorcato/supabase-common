@@ -1,0 +1,81 @@
+.hero {
+	max-width: 760px;
+	margin: 0 auto;
+	padding: 5rem 1rem 3rem;
+	text-align: center;
+}
+
+.wordmark {
+	font-size: clamp(2.5rem, 6vw, 4rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	margin: 0;
+}
+
+.accent {
+	color: var(--ifm-color-primary);
+}
+
+.tagline {
+	font-size: 1.25rem;
+	color: var(--ifm-color-emphasis-700);
+	margin: 1rem auto 2rem;
+	max-width: 620px;
+}
+
+.cta {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 2.5rem;
+}
+
+.btnPrimary,
+.btnGhost {
+	padding: 0.7rem 1.5rem;
+	border-radius: 8px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.15s ease;
+}
+
+.btnPrimary {
+	background: var(--ifm-color-primary);
+	color: #04140d;
+}
+
+.btnPrimary:hover {
+	background: var(--ifm-color-primary-dark);
+	color: #04140d;
+	text-decoration: none;
+}
+
+.btnGhost {
+	border: 1px solid var(--ifm-color-emphasis-300);
+	color: var(--ifm-font-color-base);
+}
+
+.btnGhost:hover {
+	border-color: var(--ifm-color-primary);
+	text-decoration: none;
+}
+
+.sample,
+.install {
+	max-width: 620px;
+	margin: 0 auto 1.5rem;
+	text-align: left;
+}
+
+.family {
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 2rem 1rem 5rem;
+}
+
+.sectionTitle {
+	text-align: center;
+	font-size: 1.6rem;
+	margin-bottom: 2rem;
+}
