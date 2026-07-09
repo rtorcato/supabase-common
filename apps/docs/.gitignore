@@ -5,3 +5,12 @@
 
 # TypeDoc-generated API reference (regenerated on every build)
 /docs/api/
+
+# Synced from the root CHANGELOG.md on every build (see scripts/sync-changelog.mjs)
+/docs/changelog.md
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
