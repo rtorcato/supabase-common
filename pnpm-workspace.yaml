@@ -4,3 +4,5 @@ packages:
 allowBuilds:
   '@biomejs/biome': true
   esbuild: true
+  core-js: false
+  sharp: true
