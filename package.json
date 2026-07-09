@@ -51,7 +51,7 @@
     "tsup": "^8.0.0",
     "publint": "^0.3.0",
     "husky": "^9.0.0",
-    "lint-staged": "^16.0.0",
+    "lint-staged": "^17.0.8",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^20.0.0",
     "semantic-release": "^25.0.0",
