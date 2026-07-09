@@ -12,7 +12,9 @@
     "build": "docusaurus build",
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install chromium"
   },
   "dependencies": {
     "@docusaurus/core": "^3.8.1",
@@ -26,6 +28,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.8.1",
     "@docusaurus/plugin-content-docs": "^3.8.1",
+    "@playwright/test": "^1.61.1",
     "@docusaurus/tsconfig": "^3.8.1",
     "@docusaurus/types": "^3.8.1",
     "@rtorcato/shared-docs": "github:rtorcato/shared-docs",
