@@ -22,8 +22,11 @@ Helpers operate on the plain `{ data, error }` shape every Supabase call
 returns, so the package works with any `@supabase/supabase-js` version (and
 anything else that speaks PostgREST) without depending on it.
 
-> **Early days.** The public API is still small and may change before `1.0`.
-> See the [milestones](https://github.com/rtorcato/supabase-common/milestones) for what's planned.
+Everything is a pure function over strings and plain objects — result
+unwrapping, error classification, pagination ranges, and storage URLs — so the
+whole package stays zero-dependency. See the
+[milestones](https://github.com/rtorcato/supabase-common/milestones) for what's
+planned next.
 
 ## Installation
 
@@ -55,6 +58,52 @@ try {
 } catch (e) {
   if (e instanceof SupabaseError) console.error(e.code, e.details)
 }
+```
+
+### Error classification
+
+Branch on *why* a call failed instead of matching messages. The guards read
+`.code` structurally, so they work on a thrown `SupabaseError` or a raw
+PostgREST error object:
+
+```ts
+import { isUniqueViolation, isRlsDenied, isNoRows, PG_ERROR } from '@rtorcato/supabase-common'
+
+const { error } = await supabase.from('users').insert({ email })
+if (isUniqueViolation(error)) return 'That email is already taken.'
+if (isRlsDenied(error)) return 'Not allowed.'
+
+// Also: isForeignKeyViolation, isNotNullViolation, isCheckViolation, isNoRows,
+// plus the PG_ERROR / PGRST_ERROR code constants and errorCode(err).
+```
+
+### Pagination
+
+Translate a 1-based page into Supabase's inclusive `.range()` tuple:
+
+```ts
+import { toRange, pageCount } from '@rtorcato/supabase-common'
+
+const { from, to } = toRange(2, 25) // → { from: 25, to: 49 }
+const { data, count } = await supabase
+  .from('rows')
+  .select('*', { count: 'exact' })
+  .order('id') // order (with a unique tie-breaker) before range
+  .range(from, to)
+
+const pages = pageCount(count ?? 0, 25)
+```
+
+### Storage URLs
+
+Pure URL/path builders — no client needed:
+
+```ts
+import { publicUrl, downloadUrl, storageFolder } from '@rtorcato/supabase-common'
+
+publicUrl(url, 'avatars', 'user-1/a.png')      // …/storage/v1/object/public/avatars/user-1/a.png
+downloadUrl(url, 'docs', 'report.pdf', 'q3.pdf') // adds ?download=q3.pdf
+storageFolder('user-1/avatars/a.png')          // 'user-1' — the RLS foldername convention
 ```
 
 The package is ESM-only and targets Node.js ≥22.
