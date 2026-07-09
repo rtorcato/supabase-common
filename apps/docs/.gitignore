@@ -2,3 +2,6 @@
 /.docusaurus/
 /build/
 /node_modules/
+
+# TypeDoc-generated API reference (regenerated on every build)
+/docs/api/
