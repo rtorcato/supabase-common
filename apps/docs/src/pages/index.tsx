@@ -37,10 +37,7 @@ export default function Home(): ReactElement {
 						<InstallTabs pkg="@rtorcato/supabase-common" />
 					</div>
 				</section>
-				<section className={styles.family}>
-					<h2 className={styles.sectionTitle}>Part of the @rtorcato family</h2>
-					<Siblings self="@rtorcato/supabase-common" />
-				</section>
+				<Siblings self="@rtorcato/supabase-common" />
 			</main>
 		</Layout>
 	)
