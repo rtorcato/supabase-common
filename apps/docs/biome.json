@@ -8,7 +8,9 @@
       "!**/build",
       "!**/node_modules",
       "!**/docs/api",
-      "!**/docs/changelog.md"
+      "!**/docs/changelog.md",
+      "!**/test-results/**",
+      "!**/playwright-report/**"
     ]
   },
   "overrides": [
