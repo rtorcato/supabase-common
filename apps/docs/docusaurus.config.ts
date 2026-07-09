@@ -78,6 +78,18 @@ const config: Config = {
 				},
 			},
 		],
+		[
+			'@easyops-cn/docusaurus-search-local',
+			{
+				hashed: true,
+				indexDocs: true,
+				indexBlog: false,
+				// Docs are served from the site root (routeBasePath '/').
+				docsRouteBasePath: '/',
+				highlightSearchTermsOnTargetPage: true,
+				searchBarShortcutHint: false,
+			},
+		],
 	],
 
 	themeConfig: {

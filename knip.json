@@ -5,6 +5,11 @@
       "entry": ["src/index.{ts,tsx}"],
       "project": ["src/**/*.{ts,tsx}"]
     },
-    "apps/docs": {}
+    "apps/docs": {
+      "ignoreDependencies": [
+        "@easyops-cn/docusaurus-search-local",
+        "@easyops-cn/docusaurus-plugin-docusaurus-search-local"
+      ]
+    }
   }
 }
