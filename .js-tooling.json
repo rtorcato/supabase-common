@@ -1,0 +1,32 @@
+{
+  "$schema": "https://rtorcato.github.io/js-tooling/schemas/lockfile.json",
+  "version": 1,
+  "config": {
+    "linting": {
+      "tool": "biome"
+    },
+    "formatting": {
+      "tool": "biome"
+    },
+    "testing": {
+      "framework": "vitest",
+      "environment": "node"
+    },
+    "gitHooks": true,
+    "commitLint": true,
+    "semanticRelease": true,
+    "securityAutomation": true,
+    "badges": true,
+    "aiSetup": true,
+    "projectName": "supabase-common",
+    "projectType": "library",
+    "typescript": {
+      "enabled": true,
+      "config": "base"
+    },
+    "bundler": "tsup",
+    "publint": true
+  },
+  "writtenBy": "@rtorcato/js-tooling@2.29.1",
+  "writtenAt": "2026-07-09T16:23:15.767Z"
+}

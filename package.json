@@ -1,0 +1,87 @@
+{
+  "name": "@rtorcato/supabase-common",
+  "version": "0.1.0",
+  "description": "Shared, tree-shakeable TypeScript helpers for Supabase — zero runtime dependencies.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Richard Torcato",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtorcato/supabase-common.git"
+  },
+  "homepage": "https://rtorcato.github.io/supabase-common",
+  "bugs": {
+    "url": "https://github.com/rtorcato/supabase-common/issues"
+  },
+  "keywords": [
+    "supabase",
+    "postgrest",
+    "typescript",
+    "esm",
+    "tree-shakeable"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "check": "biome check .",
+    "check:fix": "biome check --fix .",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage",
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "knip": "knip",
+    "publint": "publint --strict",
+    "prepare": "husky",
+    "release": "semantic-release",
+    "verify": "pnpm typecheck && pnpm check && pnpm exec vitest run && pnpm publint"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@rtorcato/js-tooling": "latest",
+    "knip": "^6.0.0",
+    "typescript": "^5.9.3",
+    "@types/node": "^26.0.1",
+    "@biomejs/biome": "^2.5.1",
+    "vitest": "^4.1.9",
+    "tsup": "^8.0.0",
+    "publint": "^0.3.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^16.0.0",
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "semantic-release": "^25.0.0",
+    "@semantic-release/github": "^12.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/git": "^10.0.0"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": "biome check --fix --no-errors-on-unmatched",
+    "*.{json,md,yml,yaml}": "biome format --write --no-errors-on-unmatched"
+  }
+}
