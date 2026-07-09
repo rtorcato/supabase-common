@@ -3,7 +3,13 @@
   "root": false,
   "extends": ["@rtorcato/js-tooling/biome"],
   "files": {
-    "includes": ["!**/.docusaurus", "!**/build", "!**/node_modules", "!**/docs/api"]
+    "includes": [
+      "!**/.docusaurus",
+      "!**/build",
+      "!**/node_modules",
+      "!**/docs/api",
+      "!**/docs/changelog.md"
+    ]
   },
   "overrides": [
     {

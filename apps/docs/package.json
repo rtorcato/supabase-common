@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "predev": "node ../../scripts/sync-changelog.mjs",
     "dev": "docusaurus start",
+    "prestart": "node ../../scripts/sync-changelog.mjs",
     "start": "docusaurus start",
+    "prebuild": "node ../../scripts/sync-changelog.mjs",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
