@@ -1,15 +1,13 @@
 import type * as Preset from '@docusaurus/preset-classic'
 import type { Config } from '@docusaurus/types'
+import { GITHUB_PROFILE, copyright, projectFamilyItems } from '@rtorcato/shared-docs'
 import { themes as prismThemes } from 'prism-react-renderer'
 
-// The @rtorcato open-source family — surfaced in a navbar "Projects" dropdown
-// and the footer so every sibling site cross-links to the rest.
-const PROJECT_FAMILY = [
-	{ label: 'db-common', href: 'https://rtorcato.github.io/db-common/' },
-	{ label: 'js-common', href: 'https://rtorcato.github.io/js-common/' },
-	{ label: 'browser-common', href: 'https://rtorcato.github.io/browser-common/' },
-	{ label: 'js-tooling', href: 'https://rtorcato.github.io/js-tooling/' },
-]
+// The @rtorcato open-source family, from the shared single source of truth
+// (@rtorcato/shared-docs). Surfaced as a navbar "Projects" dropdown and in the
+// footer so every sibling site cross-links to the rest — edit the family once
+// in shared-docs and each site picks it up on its next build.
+const PROJECT_FAMILY = projectFamilyItems()
 
 const config: Config = {
 	title: 'supabase-common',
@@ -54,6 +52,46 @@ const config: Config = {
 		],
 	],
 
+	plugins: [
+		[
+			'docusaurus-plugin-typedoc',
+			{
+				// Single barrel: TypeDoc resolves the whole public API from index.ts.
+				entryPoints: ['../../src/index.ts'],
+				tsconfig: '../../tsconfig.json',
+				// The library typechecks on its own toolchain; skip TypeDoc's
+				// redundant semantic check against the docs workspace's pinned TS.
+				skipErrorChecking: true,
+				out: 'docs/api',
+				readme: 'none',
+				includeVersion: false,
+				excludePrivate: true,
+				excludeInternal: true,
+				excludeExternals: true,
+				sort: ['source-order'],
+				hidePageTitle: false,
+				hideBreadcrumbs: false,
+				sidebar: {
+					// Let Docusaurus autogenerate the API sidebar from docs/api
+					// (see sidebars.ts) rather than TypeDoc emitting a sidebar.cjs.
+					autoConfiguration: false,
+				},
+			},
+		],
+		[
+			'@easyops-cn/docusaurus-search-local',
+			{
+				hashed: true,
+				indexDocs: true,
+				indexBlog: false,
+				// Docs are served from the site root (routeBasePath '/').
+				docsRouteBasePath: '/',
+				highlightSearchTermsOnTargetPage: true,
+				searchBarShortcutHint: false,
+			},
+		],
+	],
+
 	themeConfig: {
 		colorMode: {
 			defaultMode: 'dark',
@@ -67,10 +105,7 @@ const config: Config = {
 					type: 'dropdown',
 					label: 'Projects',
 					position: 'left',
-					items: [
-						{ label: 'All on GitHub →', href: 'https://github.com/rtorcato' },
-						...PROJECT_FAMILY,
-					],
+					items: [{ label: 'All on GitHub →', href: GITHUB_PROFILE }, ...PROJECT_FAMILY],
 				},
 				{
 					href: 'https://github.com/rtorcato/supabase-common',
@@ -110,7 +145,7 @@ const config: Config = {
 				{
 					title: 'Community',
 					items: [
-						{ label: '@rtorcato', href: 'https://github.com/rtorcato' },
+						{ label: '@rtorcato', href: GITHUB_PROFILE },
 						{ label: 'Issues', href: 'https://github.com/rtorcato/supabase-common/issues' },
 						{
 							label: 'License (MIT)',
@@ -119,7 +154,7 @@ const config: Config = {
 					],
 				},
 			],
-			copyright: `Copyright © ${new Date().getFullYear()} Richard Torcato. Built with Docusaurus.`,
+			copyright: copyright(),
 		},
 		prism: {
 			theme: prismThemes.vsDark,
