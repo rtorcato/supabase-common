@@ -52,6 +52,46 @@ const config: Config = {
 		],
 	],
 
+	plugins: [
+		[
+			'docusaurus-plugin-typedoc',
+			{
+				// Single barrel: TypeDoc resolves the whole public API from index.ts.
+				entryPoints: ['../../src/index.ts'],
+				tsconfig: '../../tsconfig.json',
+				// The library typechecks on its own toolchain; skip TypeDoc's
+				// redundant semantic check against the docs workspace's pinned TS.
+				skipErrorChecking: true,
+				out: 'docs/api',
+				readme: 'none',
+				includeVersion: false,
+				excludePrivate: true,
+				excludeInternal: true,
+				excludeExternals: true,
+				sort: ['source-order'],
+				hidePageTitle: false,
+				hideBreadcrumbs: false,
+				sidebar: {
+					// Let Docusaurus autogenerate the API sidebar from docs/api
+					// (see sidebars.ts) rather than TypeDoc emitting a sidebar.cjs.
+					autoConfiguration: false,
+				},
+			},
+		],
+		[
+			'@easyops-cn/docusaurus-search-local',
+			{
+				hashed: true,
+				indexDocs: true,
+				indexBlog: false,
+				// Docs are served from the site root (routeBasePath '/').
+				docsRouteBasePath: '/',
+				highlightSearchTermsOnTargetPage: true,
+				searchBarShortcutHint: false,
+			},
+		],
+	],
+
 	themeConfig: {
 		colorMode: {
 			defaultMode: 'dark',
