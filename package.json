@@ -44,7 +44,7 @@
   "devDependencies": {
     "@rtorcato/js-tooling": "latest",
     "knip": "^6.0.0",
-    "typescript": "^7.0.2",
+    "typescript": "^5.9.3",
     "@types/node": "^26.0.1",
     "@biomejs/biome": "^2.5.1",
     "vitest": "^4.1.9",
