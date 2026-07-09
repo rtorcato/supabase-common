@@ -1,6 +1,6 @@
 {
   "name": "@rtorcato/supabase-common",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Shared, tree-shakeable TypeScript helpers for Supabase — zero runtime dependencies.",
   "type": "module",
   "license": "MIT",
