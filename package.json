@@ -5,6 +5,7 @@
   "type": "module",
   "license": "MIT",
   "author": "Richard Torcato",
+  "packageManager": "pnpm@11.9.0",
   "sideEffects": false,
   "repository": {
     "type": "git",
