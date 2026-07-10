@@ -226,6 +226,12 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      # semantic-release runs `npm publish` against this workspace; without a
+      # build the `files: ["dist"]` glob is empty and only package.json + README
+      # get published (this is why 1.0.0 shipped with no dist).
+      - name: 🏗️ Build for release
+        run: pnpm build
+
       - name: 🚀 Run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
