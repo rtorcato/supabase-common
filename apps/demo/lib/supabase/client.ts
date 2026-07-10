@@ -1,4 +1,4 @@
-import { createBrowserClient } from "@supabase/ssr";
+import { createBrowserClient } from "@rtorcato/supabase-common/client";
 
 export function createClient() {
   return createBrowserClient(

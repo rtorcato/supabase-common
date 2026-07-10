@@ -1,7 +1,7 @@
 {
   "name": "@rtorcato/supabase-common",
   "version": "1.1.0",
-  "description": "Shared, tree-shakeable TypeScript helpers for Supabase — zero runtime dependencies.",
+  "description": "Tree-shakeable TypeScript helpers for Supabase: a dependency-free structural core plus framework-agnostic client factories behind an optional @supabase/ssr peer.",
   "type": "module",
   "license": "MIT",
   "author": "Richard Torcato",
@@ -18,6 +18,7 @@
   "keywords": [
     "supabase",
     "postgrest",
+    "ssr",
     "typescript",
     "esm",
     "tree-shakeable"
@@ -41,8 +42,22 @@
     "verify": "pnpm typecheck && pnpm check && pnpm exec vitest run && pnpm publint"
   },
   "dependencies": {},
+  "peerDependencies": {
+    "@supabase/ssr": ">=0.5.0",
+    "@supabase/supabase-js": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@supabase/ssr": {
+      "optional": true
+    },
+    "@supabase/supabase-js": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@rtorcato/js-tooling": "latest",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.47.0",
     "knip": "^6.0.0",
     "typescript": "^5.6.3",
     "@types/node": "^26.0.1",
@@ -70,6 +85,14 @@
       },
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./client": {
+      "types": {
+        "import": "./dist/client.d.ts",
+        "require": "./dist/client.d.cts"
+      },
+      "import": "./dist/client.js",
+      "require": "./dist/client.cjs"
     }
   },
   "files": [

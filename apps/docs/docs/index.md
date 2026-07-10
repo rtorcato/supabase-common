@@ -14,9 +14,12 @@ sidebar_position: 0
 Small, focused helpers for working with Supabase and PostgREST results — part
 of the `@rtorcato/*` family.
 
-- **Zero runtime dependencies** — helpers operate on the plain `{ data, error }`
-  shape every Supabase call returns, so the package works with any
-  `@supabase/supabase-js` version without depending on it.
+- **Dependency-free core** — the root helpers operate on the plain
+  `{ data, error }` shape every Supabase call returns, so they work with any
+  `@supabase/supabase-js` version without importing it.
+- **Optional `/client` subpath** — framework-agnostic client factories behind
+  `@supabase/ssr` / `@supabase/supabase-js` peer deps (no Next.js dependency —
+  SSR callers pass their own cookie adapter).
 - **ESM-only, tree-shakeable** — `sideEffects: false`, fully typed, targets
   Node.js ≥22.
 - **Just the ergonomics** — stop writing `if (error) throw error` on every call.
