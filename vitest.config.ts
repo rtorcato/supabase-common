@@ -1,12 +1,15 @@
-import { configDefaults, defineConfig } from 'vitest/config'
+import base from '@rtorcato/js-tooling/vitest/config'
+import { defineConfig, mergeConfig } from 'vitest/config'
 
-export default defineConfig({
-	test: {
-		globals: true,
-		environment: 'node',
-		setupFiles: ['./vitest.setup.ts'],
-		// The docs app's Playwright specs (apps/docs/tests/*.spec.ts) are run by
-		// Playwright, not Vitest — keep them out of the library test run.
-		exclude: [...configDefaults.exclude, 'apps/**'],
-	},
-})
+// Extend the shared js-tooling preset, adding only what's specific to this
+// package: the setup file, and excluding the docs app's Playwright specs
+// (apps/docs/tests/*.spec.ts) which are run by Playwright, not Vitest.
+export default mergeConfig(
+	base,
+	defineConfig({
+		test: {
+			setupFiles: ['./vitest.setup.ts'],
+			exclude: ['apps/**'],
+		},
+	})
+)
