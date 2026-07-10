@@ -1,0 +1,82 @@
+{
+  "name": "@rtorcato/supabase-next",
+  "version": "0.0.0",
+  "description": "Next.js App Router helpers for Supabase SSR — cookie-wired server client + middleware session refresh, built on @rtorcato/supabase-common.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Richard Torcato",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtorcato/supabase-common.git",
+    "directory": "packages/supabase-next"
+  },
+  "homepage": "https://rtorcato.github.io/supabase-common",
+  "bugs": {
+    "url": "https://github.com/rtorcato/supabase-common/issues"
+  },
+  "keywords": [
+    "supabase",
+    "nextjs",
+    "ssr",
+    "app-router",
+    "middleware",
+    "typescript"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "check": "biome check .",
+    "check:fix": "biome check --fix .",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "build": "tsup",
+    "publint": "publint --strict",
+    "verify": "pnpm typecheck && pnpm check && pnpm exec vitest run && pnpm publint"
+  },
+  "dependencies": {
+    "@rtorcato/supabase-common": "workspace:*"
+  },
+  "peerDependencies": {
+    "@supabase/ssr": ">=0.5.0",
+    "@supabase/supabase-js": ">=2.0.0",
+    "next": ">=14.0.0"
+  },
+  "devDependencies": {
+    "@rtorcato/js-tooling": "latest",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.47.0",
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "typescript": "^5.6.3",
+    "@types/node": "^26.0.1",
+    "@types/react": "^19.0.0",
+    "@biomejs/biome": "^2.5.1",
+    "vitest": "^4.1.9",
+    "tsup": "^8.0.0",
+    "publint": "^0.3.0"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

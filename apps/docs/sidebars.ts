@@ -6,7 +6,7 @@ const sidebars: SidebarsConfig = {
 			type: 'category',
 			label: 'Start here',
 			collapsed: false,
-			items: ['index', 'guides/installation', 'guides/usage'],
+			items: ['index', 'guides/installation', 'guides/usage', 'guides/nextjs'],
 		},
 		{
 			type: 'category',

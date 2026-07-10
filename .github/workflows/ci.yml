@@ -115,6 +115,11 @@ jobs:
             node_modules
           key: ${{ needs.dependencies.outputs.cache-key }}
 
+      # Build first so cross-package imports (supabase-next → supabase-common's
+      # dist .d.ts via its exports map) resolve during typecheck.
+      - name: 🏗️ Build packages
+        run: pnpm build
+
       - name: 🔍 Type check
         run: pnpm -r run typecheck
 
