@@ -2,6 +2,6 @@
   "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
   "extends": ["@rtorcato/js-tooling/biome"],
   "files": {
-    "includes": ["!**/.docusaurus", "!**/build", "!apps/docs/dist"]
+    "includes": ["!**/.docusaurus", "!**/build", "!apps/docs/dist", "!apps/demo"]
   }
 }

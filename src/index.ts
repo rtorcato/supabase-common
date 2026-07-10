@@ -1,1 +1,26 @@
-export { unwrap, unwrapMaybe, SupabaseError, type PostgrestLike } from './unwrap.js'
+export {
+	unwrap,
+	unwrapMaybe,
+	unwrapArray,
+	isSupabaseError,
+	SupabaseError,
+	type PostgrestLike,
+	type PostgrestErrorLike,
+} from './unwrap.js'
+export {
+	range,
+	paged,
+	type PostgrestListLike,
+	type PagedResult,
+} from './pagination.js'
+export {
+	PG_ERROR_CODES,
+	getErrorCode,
+	isUniqueViolation,
+	isForeignKeyViolation,
+	isNotNullViolation,
+	isCheckViolation,
+	isRlsViolation,
+	isNotFound,
+	isRetryable,
+} from './errors.js'

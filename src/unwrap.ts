@@ -1,4 +1,14 @@
 /**
+ * The error shape PostgREST / Supabase attaches to a failed result. Structural
+ * only, so it matches `@supabase/supabase-js` errors without depending on it.
+ */
+export interface PostgrestErrorLike {
+	message: string
+	code?: string
+	details?: string
+}
+
+/**
  * The shape every Supabase / PostgREST call resolves to: exactly one of
  * `data` or `error` is meaningful. `unwrap` collapses that into the value
  * (or a throw), so callers stop writing `if (error) throw error` everywhere.
@@ -8,19 +18,24 @@
  */
 export interface PostgrestLike<T> {
 	data: T | null
-	error: { message: string; code?: string; details?: string } | null
+	error: PostgrestErrorLike | null
 }
 
 /** Error thrown by {@link unwrap} when the Supabase result carries an error. */
 export class SupabaseError extends Error {
 	readonly code?: string
 	readonly details?: string
-	constructor(error: { message: string; code?: string; details?: string }) {
+	constructor(error: PostgrestErrorLike) {
 		super(error.message)
 		this.name = 'SupabaseError'
 		this.code = error.code
 		this.details = error.details
 	}
+}
+
+/** Type guard for narrowing an unknown `catch` value to {@link SupabaseError}. */
+export function isSupabaseError(err: unknown): err is SupabaseError {
+	return err instanceof SupabaseError
 }
 
 /**
@@ -47,4 +62,15 @@ export function unwrap<T>(result: PostgrestLike<T>): T {
 export function unwrapMaybe<T>(result: PostgrestLike<T>): T | null {
 	if (result.error) throw new SupabaseError(result.error)
 	return result.data
+}
+
+/**
+ * Unwrap a list query: throw on error, otherwise return the rows — coercing a
+ * `null` payload to `[]` so callers can always `.map()`/`.length` the result.
+ *
+ *   const rows = unwrapArray(await supabase.from('users').select())
+ */
+export function unwrapArray<T>(result: PostgrestLike<T[]>): T[] {
+	if (result.error) throw new SupabaseError(result.error)
+	return result.data ?? []
 }

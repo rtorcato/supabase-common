@@ -57,6 +57,44 @@ try {
 }
 ```
 
+### Lists & pagination
+
+```ts
+import { unwrapArray, range, paged } from '@rtorcato/supabase-common'
+
+// `unwrapArray` throws on error, else returns the rows (null → []), so it's always mappable.
+const rows = unwrapArray(await supabase.from('users').select())
+
+// `range` turns a 1-based page + size into PostgREST's [from, to] tuple.
+// `paged` unwraps a count query into a ready-to-return envelope.
+const result = await supabase
+  .from('users')
+  .select('*', { count: 'exact' })
+  .range(...range(page, 20))
+
+return paged(result, page, 20)
+// → { rows, count, page, pageSize, pageCount, hasMore }
+```
+
+### Error codes
+
+Stop hardcoding SQLSTATE / PostgREST strings — the predicates read the `.code`
+off any Supabase error (or `SupabaseError`):
+
+```ts
+import { isUniqueViolation, isRlsViolation, isNotFound, isRetryable } from '@rtorcato/supabase-common'
+
+try {
+  unwrap(await supabase.from('users').insert(row).select().single())
+} catch (e) {
+  if (isUniqueViolation(e)) return { error: 'Already exists' }
+  if (isRlsViolation(e)) return { error: 'Not allowed' }
+  throw e
+}
+// Also: isForeignKeyViolation, isNotNullViolation, isCheckViolation, isNotFound,
+// isRetryable (serialization failure / deadlock), getErrorCode, PG_ERROR_CODES.
+```
+
 The package is ESM-only and targets Node.js ≥22.
 
 ## Development
