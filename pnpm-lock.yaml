@@ -29,6 +29,12 @@ importers:
       '@semantic-release/github':
         specifier: ^12.0.0
         version: 12.0.9(semantic-release@25.0.5(typescript@5.9.3))
+      '@supabase/ssr':
+        specifier: ^0.7.0
+        version: 0.7.0(@supabase/supabase-js@2.110.2)
+      '@supabase/supabase-js':
+        specifier: ^2.47.0
+        version: 2.110.2
       '@types/node':
         specifier: ^26.0.1
         version: 26.1.1
@@ -3582,6 +3588,11 @@ packages:
     resolution: {integrity: sha512-d9XV5XzJvzzZbeAIM7fWTCUYxQJZ2Ru6ny3dJHmHGp/LIrJ+o9FpD7N9Rf/UhhWEvHXSoDe8SI32Z2ouOdMjBg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.108.0
+
+  '@supabase/ssr@0.7.0':
+    resolution: {integrity: sha512-G65t5EhLSJ5c8hTCcXifSL9Q/ZRXvqgXeNo+d3P56f4U1IxwTqjB64UfmfixvmMcjuxnq2yGqEWVJqUcO+AzAg==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.43.4
 
   '@supabase/storage-js@2.110.2':
     resolution: {integrity: sha512-EhsRSwSnmQefKJsAxoRUZ0hvHr92ECM8DDGAKR5z0HdoJx4heI60PjHUTruVNZxKX6XeobLGDyLud020Bw1iwg==}
@@ -13836,6 +13847,11 @@ snapshots:
       tslib: 2.8.1
 
   '@supabase/ssr@0.12.0(@supabase/supabase-js@2.110.2)':
+    dependencies:
+      '@supabase/supabase-js': 2.110.2
+      cookie: 1.1.1
+
+  '@supabase/ssr@0.7.0(@supabase/supabase-js@2.110.2)':
     dependencies:
       '@supabase/supabase-js': 2.110.2
       cookie: 1.1.1

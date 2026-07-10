@@ -3,7 +3,7 @@
   "ignoreWorkspaces": ["apps/demo"],
   "workspaces": {
     ".": {
-      "entry": ["src/index.{ts,tsx}"],
+      "entry": ["src/index.{ts,tsx}", "src/client.ts"],
       "project": ["src/**/*.{ts,tsx}"]
     },
     "apps/docs": {

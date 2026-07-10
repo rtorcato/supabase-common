@@ -11,7 +11,8 @@ const PROJECT_FAMILY = projectFamilyItems()
 
 const config: Config = {
 	title: 'supabase-common',
-	tagline: 'Shared, tree-shakeable TypeScript helpers for Supabase — zero runtime dependencies.',
+	tagline:
+		'Tree-shakeable TypeScript helpers for Supabase — dependency-free core, optional client factories.',
 	favicon: 'img/favicon.svg',
 
 	url: 'https://rtorcato.github.io',

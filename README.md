@@ -14,13 +14,20 @@
 ## Description
 
 `supabase-common` is a collection of small, focused helpers for working with
-Supabase and PostgREST results — built the same way as the rest of the
-`@rtorcato/*` family: TypeScript-first, ESM-only, tree-shakeable, with **zero
-runtime dependencies**.
+Supabase — built the same way as the rest of the `@rtorcato/*` family:
+TypeScript-first, ESM-only, tree-shakeable.
 
-Helpers operate on the plain `{ data, error }` shape every Supabase call
-returns, so the package works with any `@supabase/supabase-js` version (and
-anything else that speaks PostgREST) without depending on it.
+The **core** (`@rtorcato/supabase-common`) is **dependency-free**: its helpers
+operate on the plain `{ data, error }` shape every Supabase call returns, so
+they work with any `@supabase/supabase-js` version (and anything else that
+speaks PostgREST) without importing it.
+
+The optional **`/client`** subpath adds framework-agnostic client factories
+(`createBrowserClient`, `createServerClient`, `createClient`) and pulls in
+`@supabase/ssr` / `@supabase/supabase-js` as **peer dependencies** — installed
+only if you import that subpath. It stays framework-agnostic (no Next.js
+dependency): SSR callers pass their own cookie adapter, so it works with Next,
+TanStack Start, SvelteKit, Node, or edge runtimes alike.
 
 > **Early days.** The public API is still small and may change before `1.0`.
 > See the [milestones](https://github.com/rtorcato/supabase-common/milestones) for what's planned.
@@ -94,6 +101,38 @@ try {
 // Also: isForeignKeyViolation, isNotNullViolation, isCheckViolation, isNotFound,
 // isRetryable (serialization failure / deadlock), getErrorCode, PG_ERROR_CODES.
 ```
+
+### Client factories (`/client` subpath)
+
+Framework-agnostic Supabase client factories, so you stop copy-pasting client
+setup into every app. Requires the `@supabase/ssr` + `@supabase/supabase-js`
+peer deps — installed only when you import this subpath.
+
+```bash
+pnpm add @rtorcato/supabase-common @supabase/ssr @supabase/supabase-js
+```
+
+```ts
+import { createBrowserClient, createServerClient, createClient } from '@rtorcato/supabase-common/client'
+
+// Browser / SPA (React, TanStack, Vue…)
+const supabase = createBrowserClient(url, anonKey)
+
+// SSR — you pass the cookie adapter, so it's not tied to any framework.
+// Next.js App Router example:
+const store = await cookies()
+const supabase = createServerClient(url, anonKey, {
+  getAll: () => store.getAll(),
+  setAll: (cs) => cs.forEach(({ name, value, options }) => store.set(name, value, options)),
+})
+
+// Plain client (node scripts, edge functions, tests)
+const admin = createClient(url, serviceRoleKey, { auth: { persistSession: false } })
+```
+
+> Next.js-specific middleware/session helpers (`updateSession`) are intentionally
+> **not** here — they'd force a `next` dependency. They belong in your app (or a
+> future `@rtorcato/supabase-next` package).
 
 The package is ESM-only and targets Node.js ≥22.
 
