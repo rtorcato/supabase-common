@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/rtorcato/supabase-common/compare/v1.1.0...v1.2.0) (2026-07-10)
+
+
+### Features
+
+* **client:** framework-agnostic Supabase client factories ([db9624c](https://github.com/rtorcato/supabase-common/commit/db9624cfc0f7ebd259e8d76f2866317fef1ca858)), closes [#34](https://github.com/rtorcato/supabase-common/issues/34)
+
 # [1.1.0](https://github.com/rtorcato/supabase-common/compare/v1.0.0...v1.1.0) (2026-07-10)
 
 
