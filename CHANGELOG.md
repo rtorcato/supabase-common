@@ -1,3 +1,18 @@
+# [1.1.0](https://github.com/rtorcato/supabase-common/compare/v1.0.0...v1.1.0) (2026-07-10)
+
+
+### Bug Fixes
+
+* **ci:** build before semantic-release so dist is published ([f2e633f](https://github.com/rtorcato/supabase-common/commit/f2e633fb98d90deb416faea04163507b5ee1bb44))
+* **deps:** revert typescript to 5.x (7.0 breaks tsup dts build) ([99589df](https://github.com/rtorcato/supabase-common/commit/99589df0b326a2f7c9db7e3f6cd2b24dca5f0f86))
+* **tsconfig:** drop baseUrl removed in TypeScript 7 ([5cc241c](https://github.com/rtorcato/supabase-common/commit/5cc241c897b0ff609453d72b07d1fb17c3107f6b))
+* update lockfile for demo app deps ([b13dbf8](https://github.com/rtorcato/supabase-common/commit/b13dbf8fd49dd3424c70f17562779553e618dc14))
+
+
+### Features
+
+* add pagination, list and error-code helpers ([f541467](https://github.com/rtorcato/supabase-common/commit/f5414671446c8cac8cb9d951dc5292196436d322)), closes [#9](https://github.com/rtorcato/supabase-common/issues/9)
+
 # 1.0.0 (2026-07-09)
 
 
