@@ -6,3 +6,6 @@ allowBuilds:
   esbuild: true
   core-js: false
   sharp: true
+  # Pulled in transitively by the demo app's eslint-config-next. Our pipeline
+  # never runs the demo's ESLint, so its native build isn't needed here.
+  unrs-resolver: false
