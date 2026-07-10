@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/rtorcato/supabase-common/compare/v1.2.0...v1.2.1) (2026-07-10)
+
+
+### Bug Fixes
+
+* **docs:** pin typescript to 5.x so TypeDoc build works ([0521638](https://github.com/rtorcato/supabase-common/commit/0521638646cbe3d4a61dc0ce039fad816baeb58f))
+
 # [1.2.0](https://github.com/rtorcato/supabase-common/compare/v1.1.0...v1.2.0) (2026-07-10)
 
 
