@@ -5,10 +5,9 @@ on:
     branches: [main]
     paths:
       - 'apps/docs/**'
-      - 'src/**'
+      - 'packages/supabase-common/**'
       - '.github/workflows/docs.yml'
       - 'pnpm-workspace.yaml'
-      - 'package.json'
       - 'pnpm-lock.yaml'
   workflow_dispatch:
 

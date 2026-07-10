@@ -1,111 +1,42 @@
 {
-  "name": "@rtorcato/supabase-common",
-  "version": "1.2.1",
-  "description": "Tree-shakeable TypeScript helpers for Supabase: a dependency-free structural core plus framework-agnostic client factories behind an optional @supabase/ssr peer.",
+  "name": "supabase-common-monorepo",
+  "private": true,
   "type": "module",
   "license": "MIT",
   "author": "Richard Torcato",
   "packageManager": "pnpm@11.9.0",
-  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rtorcato/supabase-common.git"
   },
-  "homepage": "https://rtorcato.github.io/supabase-common",
-  "bugs": {
-    "url": "https://github.com/rtorcato/supabase-common/issues"
-  },
-  "keywords": [
-    "supabase",
-    "postgrest",
-    "ssr",
-    "typescript",
-    "esm",
-    "tree-shakeable"
-  ],
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "lint": "biome lint .",
-    "format": "biome format .",
+    "build": "pnpm --filter \"./packages/*\" build",
+    "verify": "pnpm --filter \"./packages/*\" verify",
     "check": "biome check .",
     "check:fix": "biome check --fix .",
-    "test": "vitest",
-    "test:watch": "vitest --watch",
-    "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage",
-    "build": "tsup",
-    "build:watch": "tsup --watch",
     "knip": "knip",
-    "publint": "publint --strict",
-    "prepare": "husky",
-    "release": "semantic-release",
-    "verify": "pnpm typecheck && pnpm check && pnpm exec vitest run && pnpm publint"
-  },
-  "dependencies": {},
-  "peerDependencies": {
-    "@supabase/ssr": ">=0.5.0",
-    "@supabase/supabase-js": ">=2.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@supabase/ssr": {
-      "optional": true
-    },
-    "@supabase/supabase-js": {
-      "optional": true
-    }
+    "test": "pnpm --filter \"./packages/*\" exec vitest run",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@rtorcato/js-tooling": "latest",
-    "@supabase/ssr": "^0.7.0",
-    "@supabase/supabase-js": "^2.47.0",
-    "knip": "^6.0.0",
-    "typescript": "^5.6.3",
-    "@types/node": "^26.0.1",
     "@biomejs/biome": "^2.5.1",
-    "vitest": "^4.1.9",
-    "tsup": "^8.0.0",
-    "publint": "^0.3.0",
-    "husky": "^9.0.0",
-    "lint-staged": "^17.0.8",
+    "@changesets/cli": "^2.27.0",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^20.0.0",
-    "semantic-release": "^25.0.0",
-    "@semantic-release/github": "^12.0.0",
-    "@semantic-release/changelog": "^6.0.0",
-    "@semantic-release/git": "^10.0.0"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": {
-        "import": "./dist/index.d.ts",
-        "require": "./dist/index.d.cts"
-      },
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./client": {
-      "types": {
-        "import": "./dist/client.d.ts",
-        "require": "./dist/client.d.cts"
-      },
-      "import": "./dist/client.js",
-      "require": "./dist/client.cjs"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "engines": {
-    "node": ">=22"
+    "husky": "^9.0.0",
+    "knip": "^6.0.0",
+    "lint-staged": "^17.0.8",
+    "typescript": "^5.6.3"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "biome check --fix --no-errors-on-unmatched",
     "*.{json,md,yml,yaml}": "biome format --write --no-errors-on-unmatched"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
