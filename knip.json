@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "ignoreWorkspaces": ["apps/demo"],
   "workspaces": {
-    ".": {
+    "packages/supabase-common": {
       "entry": ["src/index.{ts,tsx}", "src/client.ts"],
       "project": ["src/**/*.{ts,tsx}"]
     },

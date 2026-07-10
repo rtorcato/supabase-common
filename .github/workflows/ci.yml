@@ -116,7 +116,7 @@ jobs:
           key: ${{ needs.dependencies.outputs.cache-key }}
 
       - name: 🔍 Type check
-        run: pnpm typecheck
+        run: pnpm -r run typecheck
 
   test:
     runs-on: ubuntu-latest
@@ -169,20 +169,20 @@ jobs:
             node_modules
           key: ${{ needs.dependencies.outputs.cache-key }}
 
-      - name: 🏗️ Build project
+      - name: 🏗️ Build packages
         run: pnpm build
 
-      - name: 🔍 Validate package with publint
-        run: pnpm exec publint --strict
+      - name: 🔍 Validate packages with publint
+        run: pnpm --filter "./packages/*" exec publint --strict
 
       - name: 📦 Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
           name: build-artifacts
           path: |
-            dist/
-            package.json
-            README.md
+            packages/*/dist/
+            packages/*/package.json
+            packages/*/README.md
           retention-days: 7
 
   release:
@@ -191,7 +191,6 @@ jobs:
     if: needs.check-skip.outputs.should-skip != 'true' && github.ref == 'refs/heads/main'
     permissions:
       contents: write
-      issues: write
       pull-requests: write
       id-token: write
     steps:
@@ -199,9 +198,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          # RELEASE_TOKEN (admin PAT) lets semantic-release push the version
-          # commit + tag to a protected main; GITHUB_TOKEN can't bypass branch
-          # protection. Falls back to GITHUB_TOKEN when no PAT is set.
+          # RELEASE_TOKEN (admin PAT) lets the Changesets action push the
+          # "Version Packages" PR / version commit past branch protection;
+          # GITHUB_TOKEN can't. Falls back to GITHUB_TOKEN when no PAT is set.
           token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: 📦 Setup Node.js
@@ -221,20 +220,23 @@ jobs:
             node_modules
           key: ${{ needs.dependencies.outputs.cache-key }}
 
-      - name: 🔧 Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      # semantic-release runs `npm publish` against this workspace; without a
-      # build the `files: ["dist"]` glob is empty and only package.json + README
-      # get published (this is why 1.0.0 shipped with no dist).
-      - name: 🏗️ Build for release
+      # Build so `changeset publish`'s `npm publish` ships each package's dist
+      # (files: ["dist"]). Provenance comes from the root .npmrc (provenance=true)
+      # + id-token: write.
+      - name: 🏗️ Build packages
         run: pnpm build
 
-      - name: 🚀 Run semantic-release
+      - name: 🚀 Changesets — version PR or publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: pnpm changeset publish
+          commit: 'chore: version packages'
+          title: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release

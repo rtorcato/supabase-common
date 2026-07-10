@@ -59,8 +59,8 @@ const config: Config = {
 			'docusaurus-plugin-typedoc',
 			{
 				// Single barrel: TypeDoc resolves the whole public API from index.ts.
-				entryPoints: ['../../src/index.ts'],
-				tsconfig: '../../tsconfig.json',
+				entryPoints: ['../../packages/supabase-common/src/index.ts'],
+				tsconfig: '../../packages/supabase-common/tsconfig.json',
 				// The library typechecks on its own toolchain; skip TypeDoc's
 				// redundant semantic check against the docs workspace's pinned TS.
 				skipErrorChecking: true,
