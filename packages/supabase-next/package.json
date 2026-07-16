@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@rtorcato/js-tooling": "latest",
-    "@supabase/ssr": "^0.7.0",
+    "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.47.0",
     "next": "^16.0.0",
     "react": "^19.0.0",
