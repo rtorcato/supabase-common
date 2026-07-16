@@ -53,7 +53,7 @@
   "devDependencies": {
     "@rtorcato/js-tooling": "latest",
     "@supabase/ssr": "^0.7.0",
-    "@supabase/supabase-js": "^2.47.0",
+    "@supabase/supabase-js": "^2.110.7",
     "typescript": "^5.6.3",
     "@types/node": "^26.0.1",
     "@biomejs/biome": "^2.5.1",
