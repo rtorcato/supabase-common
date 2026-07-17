@@ -4,12 +4,21 @@
  * structural — no client, no `@supabase/supabase-js` dependency.
  */
 
+// Linear slash trimming — avoids the polynomial backtracking a `/\/+$/`-style
+// regex would incur on caller-supplied paths (js/polynomial-redos).
+function trimSlashes(s: string): string {
+	let start = 0
+	let end = s.length
+	while (start < end && s[start] === '/') start++
+	while (end > start && s[end - 1] === '/') end--
+	return s.slice(start, end)
+}
+
 function joinUrl(supabaseUrl: string, ...segments: string[]): string {
-	const base = supabaseUrl.replace(/\/+$/, '')
-	const path = segments
-		.map((s) => s.replace(/^\/+|\/+$/g, ''))
-		.filter(Boolean)
-		.join('/')
+	let end = supabaseUrl.length
+	while (end > 0 && supabaseUrl[end - 1] === '/') end--
+	const base = supabaseUrl.slice(0, end)
+	const path = segments.map(trimSlashes).filter(Boolean).join('/')
 	return `${base}/${path}`
 }
 
