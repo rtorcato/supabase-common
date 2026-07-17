@@ -24,3 +24,9 @@ export {
 	isNotFound,
 	isRetryable,
 } from './errors.js'
+export {
+	publicUrl,
+	authenticatedUrl,
+	downloadUrl,
+	storageFolder,
+} from './storage.js'
