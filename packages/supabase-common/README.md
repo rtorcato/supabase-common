@@ -102,6 +102,25 @@ try {
 // isRetryable (serialization failure / deadlock), getErrorCode, PG_ERROR_CODES.
 ```
 
+### Storage URLs
+
+Pure string builders for Supabase Storage object URLs — no client, no
+`@supabase/supabase-js` dependency (Supabase's own `getPublicUrl` is just
+string concatenation).
+
+```ts
+import { publicUrl, authenticatedUrl, downloadUrl, storageFolder } from '@rtorcato/supabase-common'
+
+publicUrl('https://abc.supabase.co', 'avatars', 'a.png')
+// → https://abc.supabase.co/storage/v1/object/public/avatars/a.png
+
+downloadUrl(url, 'docs', 'report.pdf', 'My Report.pdf') // forces a browser download
+authenticatedUrl(url, 'docs', 'x/y.pdf')                // needs a bearer token to fetch
+
+// The top-level folder — matches what RLS checks via storage.foldername(name)[1].
+storageFolder('user-123/avatars/a.png') // → 'user-123'
+```
+
 ### Client factories (`/client` subpath)
 
 Framework-agnostic Supabase client factories, so you stop copy-pasting client
