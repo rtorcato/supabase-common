@@ -138,6 +138,21 @@ parsePublicUrl('https://abc.supabase.co/storage/v1/object/public/avatars/a.png')
 splitPath('user-1/avatars/a.png') // → { dir: 'user-1/avatars', name: 'a', ext: 'png' }
 ```
 
+### JWT claims (decode only — unverified)
+
+Read claims off an access token you already trust — pure base64url decode, no
+client, no network. **Does not verify the signature**; for an auth decision use
+the SDK's `auth.getClaims()`.
+
+```ts
+import { decodeClaims, getUserId, getRole, isExpired } from '@rtorcato/supabase-common'
+
+const claims = decodeClaims(accessToken) // { sub, role, email, exp, ... } | null
+getUserId(accessToken) // → 'user-123'   (claims?.sub)
+getRole(accessToken)   // → 'authenticated'
+if (claims && isExpired(claims)) { /* refresh */ }
+```
+
 ### Client factories (`/client` subpath)
 
 Framework-agnostic Supabase client factories, so you stop copy-pasting client

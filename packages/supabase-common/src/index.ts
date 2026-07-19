@@ -35,3 +35,10 @@ export {
 	storageFolder,
 	type TransformOptions,
 } from './storage.js'
+export {
+	decodeClaims,
+	getUserId,
+	getRole,
+	isExpired,
+	type SupabaseClaims,
+} from './claims.js'
