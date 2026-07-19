@@ -55,3 +55,9 @@
 	--ifm-code-background: #0d151a;
 	--docusaurus-highlighted-code-line-bg: rgba(62, 207, 142, 0.15);
 }
+
+/* Footer (style: 'dark') defaults to a lighter slate — pin it to the navbar
+ * background so header and footer read as one surface. */
+[data-theme="dark"] .footer {
+	--ifm-footer-background-color: var(--ifm-navbar-background-color);
+}
