@@ -1,5 +1,11 @@
 ## [1.2.1](https://github.com/rtorcato/supabase-common/compare/v1.2.0...v1.2.1) (2026-07-10)
 
+## 1.5.0
+
+### Minor Changes
+
+- 68e134a: Add `toHttpStatus` — map a Supabase/PostgREST error to the HTTP status an API route should return (409/403/404/400/401/503, else 500), built on the existing error-code predicates.
+
 ## 1.4.0
 
 ### Minor Changes
