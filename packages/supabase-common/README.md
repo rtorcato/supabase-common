@@ -109,13 +109,16 @@ Pure string builders for Supabase Storage object URLs — no client, no
 string concatenation).
 
 ```ts
-import { publicUrl, authenticatedUrl, downloadUrl, storageFolder } from '@rtorcato/supabase-common'
+import { publicUrl, authenticatedUrl, downloadUrl, transformUrl, storageFolder } from '@rtorcato/supabase-common'
 
 publicUrl('https://abc.supabase.co', 'avatars', 'a.png')
 // → https://abc.supabase.co/storage/v1/object/public/avatars/a.png
 
 downloadUrl(url, 'docs', 'report.pdf', 'My Report.pdf') // forces a browser download
 authenticatedUrl(url, 'docs', 'x/y.pdf')                // needs a bearer token to fetch
+
+transformUrl(url, 'avatars', 'a.png', { width: 100, height: 100, resize: 'cover' })
+// → …/storage/v1/render/image/public/avatars/a.png?width=100&height=100&resize=cover
 
 // The top-level folder — matches what RLS checks via storage.foldername(name)[1].
 storageFolder('user-123/avatars/a.png') // → 'user-123'

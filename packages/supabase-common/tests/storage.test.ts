@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { authenticatedUrl, downloadUrl, publicUrl, storageFolder } from '../src/index.js'
+import {
+	authenticatedUrl,
+	downloadUrl,
+	publicUrl,
+	storageFolder,
+	transformUrl,
+} from '../src/index.js'
 
 const URL = 'https://abc.supabase.co'
 
@@ -27,6 +33,34 @@ describe('downloadUrl', () => {
 		)
 		expect(downloadUrl(URL, 'b', 'a.png', 'my file.png')).toBe(
 			'https://abc.supabase.co/storage/v1/object/public/b/a.png?download=my%20file.png'
+		)
+	})
+})
+
+describe('transformUrl', () => {
+	it('hits the render endpoint with no query when no options given', () => {
+		expect(transformUrl(URL, 'avatars', 'a.png')).toBe(
+			'https://abc.supabase.co/storage/v1/render/image/public/avatars/a.png'
+		)
+	})
+
+	it('serialises transform options as query params', () => {
+		expect(
+			transformUrl(URL, 'avatars', 'a.png', {
+				width: 100,
+				height: 200,
+				resize: 'contain',
+				quality: 80,
+				format: 'origin',
+			})
+		).toBe(
+			'https://abc.supabase.co/storage/v1/render/image/public/avatars/a.png?width=100&height=200&resize=contain&quality=80&format=origin'
+		)
+	})
+
+	it('omits unset options', () => {
+		expect(transformUrl(URL, 'b', 'a.png', { width: 50 })).toBe(
+			'https://abc.supabase.co/storage/v1/render/image/public/b/a.png?width=50'
 		)
 	})
 })

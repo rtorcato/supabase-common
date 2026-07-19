@@ -28,5 +28,7 @@ export {
 	publicUrl,
 	authenticatedUrl,
 	downloadUrl,
+	transformUrl,
 	storageFolder,
+	type TransformOptions,
 } from './storage.js'
