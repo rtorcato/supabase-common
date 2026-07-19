@@ -1,5 +1,11 @@
 ## [1.2.1](https://github.com/rtorcato/supabase-common/compare/v1.2.0...v1.2.1) (2026-07-10)
 
+## 1.4.0
+
+### Minor Changes
+
+- 45eb614: Add `transformUrl` — a pure builder for Supabase's image render endpoint (width/height/resize/quality/format), alongside the existing Storage URL builders.
+
 ## 1.3.0
 
 ### Minor Changes

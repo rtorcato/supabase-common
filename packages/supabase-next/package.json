@@ -1,6 +1,6 @@
 {
   "name": "@rtorcato/supabase-next",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Next.js App Router helpers for Supabase SSR — cookie-wired server client + middleware session refresh, built on @rtorcato/supabase-common.",
   "type": "module",
   "license": "MIT",
