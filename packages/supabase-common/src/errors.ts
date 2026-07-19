@@ -74,3 +74,34 @@ export function isRetryable(err: unknown): boolean {
 	const code = getErrorCode(err)
 	return code === PG_ERROR_CODES.serializationFailure || code === PG_ERROR_CODES.deadlockDetected
 }
+
+/**
+ * Map a Supabase/PostgREST error to the HTTP status an API route should return,
+ * so you stop rewriting the same `if (isUniqueViolation) return 409` switch.
+ * Anything unrecognised (including non-errors) falls back to `500`.
+ *
+ *   return new Response(msg, { status: toHttpStatus(error) })
+ */
+export function toHttpStatus(err: unknown): number {
+	switch (getErrorCode(err)) {
+		case PG_ERROR_CODES.uniqueViolation:
+		case PG_ERROR_CODES.exclusionViolation:
+		case PG_ERROR_CODES.foreignKeyViolation:
+			return 409 // conflicts with existing / related data
+		case PG_ERROR_CODES.notNullViolation:
+		case PG_ERROR_CODES.checkViolation:
+			return 400 // caller sent invalid data
+		case PG_ERROR_CODES.insufficientPrivilege:
+			return 403 // RLS / role denied
+		case PG_ERROR_CODES.jwtExpired:
+			return 401
+		case PG_ERROR_CODES.noRows:
+			return 404
+		case PG_ERROR_CODES.serializationFailure:
+		case PG_ERROR_CODES.deadlockDetected:
+		case PG_ERROR_CODES.queryCanceled:
+			return 503 // transient — retry
+		default:
+			return 500
+	}
+}
