@@ -2,7 +2,14 @@
 
 ## Supported versions
 
-Security fixes are applied to the latest release on the default branch.
+Security fixes land on the **latest published release** of each package; older
+releases are not patched. Upgrade to the current version to receive fixes.
+
+| Package | Supported |
+| --- | --- |
+| `@rtorcato/supabase-common` | Latest 1.x ✅ |
+| `@rtorcato/supabase-next` | Latest 0.x ✅ |
+| Any earlier release | ❌ |
 
 ## Reporting a vulnerability
 
