@@ -61,3 +61,9 @@
 [data-theme="dark"] .footer {
 	--ifm-footer-background-color: var(--ifm-navbar-background-color);
 }
+
+/* Breathing room between the page content and the footer — the last section
+ * otherwise butts right up against the footer's top edge. */
+.footer {
+	margin-top: 4rem;
+}
