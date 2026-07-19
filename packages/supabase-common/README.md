@@ -153,6 +153,22 @@ getRole(accessToken)   // → 'authenticated'
 if (claims && isExpired(claims)) { /* refresh */ }
 ```
 
+### Realtime conventions
+
+Pure builders for Realtime naming and the `postgres_changes` filter — you still
+open the channel with the SDK.
+
+```ts
+import { channelName, postgresChangesFilter } from '@rtorcato/supabase-common'
+
+const name = channelName('public', 'messages', roomId) // → 'public:messages:42'
+supabase
+  .channel(name)
+  .on('postgres_changes', postgresChangesFilter({ table: 'messages', filter: `room_id=eq.${roomId}` }), handler)
+  .subscribe()
+// filter → { event: '*', schema: 'public', table: 'messages', filter: 'room_id=eq.42' }
+```
+
 ### Client factories (`/client` subpath)
 
 Framework-agnostic Supabase client factories, so you stop copy-pasting client
