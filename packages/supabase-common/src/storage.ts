@@ -46,6 +46,40 @@ export function downloadUrl(
 	return url + (filename ? `?download=${encodeURIComponent(filename)}` : '?download')
 }
 
+/** Image transformation options for Supabase's render endpoint. */
+export interface TransformOptions {
+	width?: number
+	height?: number
+	/** How the image fits the target box. Supabase default is `cover`. */
+	resize?: 'cover' | 'contain' | 'fill'
+	/** 20–100. Lower = smaller file. */
+	quality?: number
+	/** `origin` keeps the source format instead of auto-negotiating (e.g. webp). */
+	format?: 'origin'
+}
+
+/**
+ * Transformed (resized) public image URL via the render endpoint:
+ * `${url}/storage/v1/render/image/public/${bucket}/${path}?width=…`.
+ * Pure string work like the other builders — the transform happens server-side.
+ */
+export function transformUrl(
+	supabaseUrl: string,
+	bucket: string,
+	path: string,
+	options: TransformOptions = {}
+): string {
+	const url = joinUrl(supabaseUrl, 'storage/v1/render/image/public', bucket, path)
+	const params = new URLSearchParams()
+	if (options.width != null) params.set('width', String(options.width))
+	if (options.height != null) params.set('height', String(options.height))
+	if (options.resize) params.set('resize', options.resize)
+	if (options.quality != null) params.set('quality', String(options.quality))
+	if (options.format) params.set('format', options.format)
+	const query = params.toString()
+	return query ? `${url}?${query}` : url
+}
+
 /**
  * The top-level folder of a storage path — matches what RLS policies check via
  * `storage.foldername(name)[1]`, handy for the `${userId}/file` convention.
