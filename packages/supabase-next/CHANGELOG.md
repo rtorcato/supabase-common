@@ -1,5 +1,12 @@
 # @rtorcato/supabase-next
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [caf77de]
+  - @rtorcato/supabase-common@1.7.0
+
 ## 0.1.3
 
 ### Patch Changes
