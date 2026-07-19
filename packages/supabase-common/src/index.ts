@@ -42,3 +42,10 @@ export {
 	isExpired,
 	type SupabaseClaims,
 } from './claims.js'
+export {
+	channelName,
+	postgresChangesFilter,
+	type PostgresChangesEvent,
+	type PostgresChangesFilter,
+	type PostgresChangesFilterInput,
+} from './realtime.js'
