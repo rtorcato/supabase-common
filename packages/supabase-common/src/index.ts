@@ -30,6 +30,8 @@ export {
 	authenticatedUrl,
 	downloadUrl,
 	transformUrl,
+	parsePublicUrl,
+	splitPath,
 	storageFolder,
 	type TransformOptions,
 } from './storage.js'

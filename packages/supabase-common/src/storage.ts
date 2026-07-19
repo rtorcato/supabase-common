@@ -81,6 +81,52 @@ export function transformUrl(
 }
 
 /**
+ * Inverse of {@link publicUrl}: pull `{ bucket, path }` back out of a public
+ * object URL, or `null` if it isn't one. Query string / hash (e.g. `?download`)
+ * is ignored; the path is percent-decoded when it decodes cleanly.
+ *
+ *   parsePublicUrl('https://abc.supabase.co/storage/v1/object/public/avatars/a.png')
+ *   // → { bucket: 'avatars', path: 'a.png' }
+ */
+export function parsePublicUrl(url: string): { bucket: string; path: string } | null {
+	const marker = '/storage/v1/object/public/'
+	const i = url.indexOf(marker)
+	if (i === -1) return null
+	let rest = url.slice(i + marker.length)
+	const q = rest.search(/[?#]/)
+	if (q !== -1) rest = rest.slice(0, q)
+	const slash = rest.indexOf('/')
+	if (slash < 1) return null // need a non-empty bucket and a path
+	const bucket = rest.slice(0, slash)
+	const raw = rest.slice(slash + 1)
+	if (!raw) return null
+	let path = raw
+	try {
+		path = decodeURIComponent(raw)
+	} catch {
+		// malformed %-encoding — keep the raw segment
+	}
+	return { bucket, path }
+}
+
+/**
+ * Split a storage path into `{ dir, name, ext }` (a leading dot is a hidden
+ * file, not an extension; only the last `.` splits the extension).
+ *
+ *   splitPath('user-1/avatars/a.png') // → { dir: 'user-1/avatars', name: 'a', ext: 'png' }
+ *   splitPath('.gitignore')           // → { dir: '', name: '.gitignore', ext: '' }
+ */
+export function splitPath(path: string): { dir: string; name: string; ext: string } {
+	const clean = trimSlashes(path)
+	const slash = clean.lastIndexOf('/')
+	const dir = slash === -1 ? '' : clean.slice(0, slash)
+	const base = slash === -1 ? clean : clean.slice(slash + 1)
+	const dot = base.lastIndexOf('.')
+	if (dot <= 0) return { dir, name: base, ext: '' }
+	return { dir, name: base.slice(0, dot), ext: base.slice(dot + 1) }
+}
+
+/**
  * The top-level folder of a storage path — matches what RLS policies check via
  * `storage.foldername(name)[1]`, handy for the `${userId}/file` convention.
  *

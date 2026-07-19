@@ -132,6 +132,10 @@ transformUrl(url, 'avatars', 'a.png', { width: 100, height: 100, resize: 'cover'
 
 // The top-level folder — matches what RLS checks via storage.foldername(name)[1].
 storageFolder('user-123/avatars/a.png') // → 'user-123'
+
+parsePublicUrl('https://abc.supabase.co/storage/v1/object/public/avatars/a.png')
+// → { bucket: 'avatars', path: 'a.png' } (inverse of publicUrl; null if not one)
+splitPath('user-1/avatars/a.png') // → { dir: 'user-1/avatars', name: 'a', ext: 'png' }
 ```
 
 ### Client factories (`/client` subpath)

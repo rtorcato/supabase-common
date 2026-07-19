@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 import {
 	authenticatedUrl,
 	downloadUrl,
+	parsePublicUrl,
 	publicUrl,
+	splitPath,
 	storageFolder,
 	transformUrl,
 } from '../src/index.js'
@@ -62,6 +64,46 @@ describe('transformUrl', () => {
 		expect(transformUrl(URL, 'b', 'a.png', { width: 50 })).toBe(
 			'https://abc.supabase.co/storage/v1/render/image/public/b/a.png?width=50'
 		)
+	})
+})
+
+describe('parsePublicUrl', () => {
+	it('is the inverse of publicUrl', () => {
+		expect(parsePublicUrl(publicUrl(URL, 'avatars', 'nested/a.png'))).toEqual({
+			bucket: 'avatars',
+			path: 'nested/a.png',
+		})
+	})
+
+	it('ignores query/hash and decodes the path', () => {
+		expect(parsePublicUrl(downloadUrl(URL, 'docs', 'a b.pdf', 'x'))).toEqual({
+			bucket: 'docs',
+			path: 'a b.pdf',
+		})
+		expect(parsePublicUrl('https://abc.supabase.co/storage/v1/object/public/b/a%20b.png')).toEqual({
+			bucket: 'b',
+			path: 'a b.png',
+		})
+	})
+
+	it('returns null for non-public-object URLs', () => {
+		expect(parsePublicUrl(authenticatedUrl(URL, 'b', 'a.png'))).toBeNull()
+		expect(parsePublicUrl('https://example.com/whatever')).toBeNull()
+		expect(parsePublicUrl('https://abc.supabase.co/storage/v1/object/public/b')).toBeNull()
+	})
+})
+
+describe('splitPath', () => {
+	it('splits dir / name / ext', () => {
+		expect(splitPath('user-1/avatars/a.png')).toEqual({
+			dir: 'user-1/avatars',
+			name: 'a',
+			ext: 'png',
+		})
+		expect(splitPath('a.png')).toEqual({ dir: '', name: 'a', ext: 'png' })
+		expect(splitPath('a.tar.gz')).toEqual({ dir: '', name: 'a.tar', ext: 'gz' })
+		expect(splitPath('/x/y/README')).toEqual({ dir: 'x/y', name: 'README', ext: '' })
+		expect(splitPath('.gitignore')).toEqual({ dir: '', name: '.gitignore', ext: '' })
 	})
 })
 
