@@ -1,5 +1,12 @@
 # @rtorcato/supabase-next
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [45eb614]
+  - @rtorcato/supabase-common@1.4.0
+
 ## 0.1.0
 
 ### Minor Changes
