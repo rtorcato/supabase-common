@@ -23,6 +23,7 @@ export {
 	isRlsViolation,
 	isNotFound,
 	isRetryable,
+	toHttpStatus,
 } from './errors.js'
 export {
 	publicUrl,

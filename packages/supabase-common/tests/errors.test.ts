@@ -7,6 +7,7 @@ import {
 	isRlsViolation,
 	isUniqueViolation,
 	SupabaseError,
+	toHttpStatus,
 } from '../src/index.js'
 
 describe('getErrorCode', () => {
@@ -39,5 +40,24 @@ describe('code predicates', () => {
 		expect(isRetryable({ code: '40001' })).toBe(true)
 		expect(isRetryable({ code: '40P01' })).toBe(true)
 		expect(isRetryable({ code: '23505' })).toBe(false)
+	})
+})
+
+describe('toHttpStatus', () => {
+	it('maps error codes to HTTP statuses', () => {
+		expect(toHttpStatus({ code: '23505' })).toBe(409) // unique
+		expect(toHttpStatus({ code: '23503' })).toBe(409) // foreign key
+		expect(toHttpStatus({ code: '23502' })).toBe(400) // not null
+		expect(toHttpStatus({ code: '23514' })).toBe(400) // check
+		expect(toHttpStatus({ code: '42501' })).toBe(403) // RLS
+		expect(toHttpStatus({ code: 'PGRST301' })).toBe(401) // jwt expired
+		expect(toHttpStatus({ code: 'PGRST116' })).toBe(404) // no rows
+		expect(toHttpStatus({ code: '40001' })).toBe(503) // retryable
+	})
+
+	it('falls back to 500 for unknown or non-errors', () => {
+		expect(toHttpStatus({ code: 'XX000' })).toBe(500)
+		expect(toHttpStatus(new Error('boom'))).toBe(500)
+		expect(toHttpStatus(null)).toBe(500)
 	})
 })

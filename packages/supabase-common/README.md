@@ -102,6 +102,16 @@ try {
 // isRetryable (serialization failure / deadlock), getErrorCode, PG_ERROR_CODES.
 ```
 
+Or skip the ladder in an API route — `toHttpStatus` maps the error to a status
+(409 unique, 403 RLS, 404 not-found, 400 constraint, 401 expired JWT, 503
+retryable, 500 otherwise):
+
+```ts
+catch (e) {
+  return new Response('Request failed', { status: toHttpStatus(e) })
+}
+```
+
 ### Storage URLs
 
 Pure string builders for Supabase Storage object URLs — no client, no
