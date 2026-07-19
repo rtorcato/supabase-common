@@ -1,5 +1,11 @@
 ## [1.2.1](https://github.com/rtorcato/supabase-common/compare/v1.2.0...v1.2.1) (2026-07-10)
 
+## 1.7.0
+
+### Minor Changes
+
+- caf77de: Add unverified JWT claim helpers — `decodeClaims`, `getUserId`, `getRole`, `isExpired` (base64url decode of the access-token payload, no client). Closes #32.
+
 ## 1.6.0
 
 ### Minor Changes
