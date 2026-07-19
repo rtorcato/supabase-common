@@ -45,7 +45,7 @@ yarn add @rtorcato/supabase-common
 ## Usage
 
 ```ts
-import { unwrap, unwrapMaybe, SupabaseError } from '@rtorcato/supabase-common'
+import { unwrap, unwrapMaybe, unwrapArray, SupabaseError } from '@rtorcato/supabase-common'
 
 // `unwrap` collapses `{ data, error }` into the value — or throws SupabaseError.
 // No more `if (error) throw error` on every call.
@@ -55,6 +55,10 @@ const user = unwrap(await supabase.from('users').select().eq('id', id).single())
 // `unwrapMaybe` returns null for a missing row, still throws on a real error.
 const maybe = unwrapMaybe(await supabase.from('users').select().eq('id', id).maybeSingle())
 // → the row, or null
+
+// `unwrapArray` always returns an array — null data becomes [], never throws on empty.
+const users = unwrapArray(await supabase.from('users').select())
+// → the rows, or []
 
 // The thrown error preserves PostgREST metadata.
 try {
