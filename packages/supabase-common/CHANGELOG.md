@@ -1,5 +1,15 @@
 ## [1.2.1](https://github.com/rtorcato/supabase-common/compare/v1.2.0...v1.2.1) (2026-07-10)
 
+## 1.8.0
+
+### Minor Changes
+
+- a40e94b: Add Realtime convention builders — `channelName(schema, table, id?)` and `postgresChangesFilter({ event?, schema?, table, filter? })` (pure, no client). Closes #33.
+
+### Patch Changes
+
+- de9ed11: Fix build: emit the `./client` subpath (`dist/client.*`) again. Newer `@rtorcato/js-tooling` no longer auto-derives tsup entries, so `src/client.ts` is now listed explicitly — the `./client` export was unresolvable (broke `@rtorcato/supabase-next`'s build/typecheck).
+
 ## 1.7.0
 
 ### Minor Changes
