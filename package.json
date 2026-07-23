@@ -23,13 +23,13 @@
   },
   "devDependencies": {
     "@rtorcato/js-tooling": "latest",
-    "@biomejs/biome": "^2.5.1",
-    "@changesets/cli": "^2.27.0",
+    "@biomejs/biome": "^2.5.5",
+    "@changesets/cli": "^2.31.1",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^20.0.0",
     "husky": "^9.0.0",
-    "knip": "^6.0.0",
-    "lint-staged": "^17.0.8",
+    "knip": "^6.29.0",
+    "lint-staged": "^17.2.0",
     "typescript": "^5.6.3"
   },
   "lint-staged": {
