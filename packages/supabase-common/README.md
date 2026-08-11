@@ -249,7 +249,7 @@ supabase-common/
 - [@rtorcato/db-common](https://rtorcato.github.io/db-common/) — database-agnostic query helpers
 - [@rtorcato/js-common](https://rtorcato.github.io/js-common/) — general TypeScript utilities
 - [@rtorcato/browser-common](https://rtorcato.github.io/browser-common/) — browser Web API wrappers
-- [@rtorcato/js-tooling](https://rtorcato.github.io/js-tooling/) — shared Biome/TS/Vitest/release presets
+- [@rtorcato/repo-tooling](https://rtorcato.github.io/repo-tooling/) — shared Biome/TS/Vitest/release presets
 
 ## Contributing
 
