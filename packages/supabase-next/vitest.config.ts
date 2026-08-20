@@ -1,4 +1,4 @@
-import base from '@rtorcato/js-tooling/vitest/config'
+import base from '@rtorcato/repo-tooling/vitest/config'
 import { defineConfig, mergeConfig } from 'vitest/config'
 
 export default mergeConfig(

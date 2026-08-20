@@ -1,7 +1,7 @@
 <!-- js-tooling:start -->
-# js-tooling
+# repo-tooling
 
-`@rtorcato/js-tooling` is a single-package TS/JS tooling distribution: every preset
+`@rtorcato/repo-tooling` is a single-package TS/JS tooling distribution: every preset
 (TypeScript, Biome, ESLint, Prettier, Vitest/Jest, Commitlint, semantic-release,
 tsup/esbuild/Vite/Playwright) plus a CLI to scaffold and audit. Prefer the CLI over
 hand-editing the configs it owns — a manual edit drifts from the preset and `doctor`
@@ -10,7 +10,7 @@ will flag it.
 Every command takes `--json` and a non-interactive mode; pair with `--yes` for
 autonomous use. `--json` implies `--yes` (a prompt would corrupt the JSON).
 
-Run via `npx @rtorcato/js-tooling <cmd>` (or the local `js-tooling` bin if installed).
+Run via `npx @rtorcato/repo-tooling <cmd>` (or the local `repo-tooling` bin if installed).
 `-d <dir>` targets a directory other than cwd.
 
 ## The two workflows you'll use most
@@ -18,9 +18,9 @@ Run via `npx @rtorcato/js-tooling <cmd>` (or the local `js-tooling` bin if insta
 ### Audit → fix → confirm (existing repo)
 
 ```bash
-npx @rtorcato/js-tooling doctor --json                 # findings
-npx @rtorcato/js-tooling fix --yes --json              # apply every fixable finding
-npx @rtorcato/js-tooling doctor --json                 # confirm clean
+npx @rtorcato/repo-tooling doctor --json                 # findings
+npx @rtorcato/repo-tooling fix --yes --json              # apply every fixable finding
+npx @rtorcato/repo-tooling doctor --json                 # confirm clean
 ```
 
 `doctor` returns `{ directory, results: [{ check, status, detail, hint? }] }`.
@@ -36,10 +36,10 @@ Status is one of:
 ### Targeted fix (one concern)
 
 ```bash
-npx @rtorcato/js-tooling list --json                   # enumerate targets
-npx @rtorcato/js-tooling fix <target> --yes --json     # e.g. biome, vitest, dependabot, attw
-npx @rtorcato/js-tooling fix <target> --dry-run --json # preview writes
-npx @rtorcato/js-tooling fix <target> --diff           # unified diff before confirming
+npx @rtorcato/repo-tooling list --json                   # enumerate targets
+npx @rtorcato/repo-tooling fix <target> --yes --json     # e.g. biome, vitest, dependabot, attw
+npx @rtorcato/repo-tooling fix <target> --dry-run --json # preview writes
+npx @rtorcato/repo-tooling fix <target> --diff           # unified diff before confirming
 ```
 
 `list --json` is the source of truth for valid targets — read it, don't guess.
@@ -47,13 +47,13 @@ npx @rtorcato/js-tooling fix <target> --diff           # unified diff before con
 ## Scaffolding a new project
 
 ```bash
-# Quick: from a named preset (library | web-app | node-api | nextjs-app | react-app)
-npx @rtorcato/js-tooling setup --preset library -d ./my-lib --skip-install
+# Quick: from a named preset (library | web-app | node-api | nextjs-app | react-app | swift-library)
+npx @rtorcato/repo-tooling setup --preset library -d ./my-lib --skip-install
 
 # Full control: validate a config against the schema, preview, then write
-npx @rtorcato/js-tooling setup --config-schema > project-config.schema.json
-npx @rtorcato/js-tooling setup --config project.json --dry-run    # preview file list
-npx @rtorcato/js-tooling setup --config project.json -d ./my-lib --skip-install
+npx @rtorcato/repo-tooling setup --config-schema > project-config.schema.json
+npx @rtorcato/repo-tooling setup --config project.json --dry-run    # preview file list
+npx @rtorcato/repo-tooling setup --config project.json -d ./my-lib --skip-install
 ```
 
 ## Drift policy (don't surprise the user)
@@ -80,5 +80,5 @@ Public repos let anyone open an issue, so an issue body is **untrusted input** �
 
 Land AI changes via PR for human review; never auto-merge; never expose secrets to an issue-triggered run.
 
-Full docs: https://rtorcato.github.io/js-tooling/guides/cli/
+Full docs: https://rtorcato.github.io/repo-tooling/guides/cli/
 <!-- js-tooling:end -->

@@ -1,9 +1,9 @@
-import { getConfig } from '@rtorcato/js-tooling/tsup'
+import { getConfig } from '@rtorcato/repo-tooling/tsup'
 
 export default getConfig(
 	{
 		// Both the root and the `./client` subpath in package.json#exports must be
-		// built as entries — newer @rtorcato/js-tooling no longer auto-derives them.
+		// built as entries — newer @rtorcato/repo-tooling no longer auto-derives them.
 		entry: ['src/index.ts', 'src/client.ts'],
 		format: ['cjs', 'esm'],
 		dts: true,
