@@ -22,14 +22,14 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@rtorcato/repo-tooling": "^3.7.3",
-    "@biomejs/biome": "^2.5.1",
+    "@rtorcato/repo-tooling": "^3.35.0",
+    "@biomejs/biome": "^2.5.13",
     "@changesets/cli": "^2.27.0",
-    "@commitlint/cli": "^21.2.1",
+    "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^20.0.0",
     "husky": "^9.0.0",
-    "knip": "^6.0.0",
-    "lint-staged": "^17.0.8",
+    "knip": "^6.35.1",
+    "lint-staged": "^17.5.1",
     "typescript": "^5.6.3"
   },
   "lint-staged": {
