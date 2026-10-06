@@ -45,17 +45,17 @@
   },
   "devDependencies": {
     "@rtorcato/repo-tooling": "^3.7.3",
-    "@supabase/ssr": "^0.7.0",
-    "@supabase/supabase-js": "^2.47.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.2",
     "next": "^16.0.0",
     "react": "^19.3.0",
     "typescript": "^5.6.3",
     "@types/node": "^26.0.1",
     "@types/react": "^19.3.0",
-    "@biomejs/biome": "^2.5.1",
+    "@biomejs/biome": "^2.5.15",
     "vitest": "^4.1.9",
     "tsup": "^8.0.0",
-    "publint": "^0.3.0"
+    "publint": "^0.3.25"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
