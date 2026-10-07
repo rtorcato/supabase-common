@@ -22,7 +22,7 @@ importers:
         version: 21.2.3
       '@rtorcato/repo-tooling':
         specifier: ^5.5.2
-        version: 5.5.2(ab6b3415fb2e1ff4c4d69c34927f7f35)
+        version: 5.5.2(9bef071bdbbbc2695ef837fde8a2d9af)
       husky:
         specifier: ^9.0.0
         version: 9.1.7
@@ -186,13 +186,16 @@ importers:
         version: 2.5.15
       '@rtorcato/repo-tooling':
         specifier: ^3.7.3
-        version: 3.7.3(3393e49f3d7d89c4c26f58e124baca87)
+        version: 3.7.3(260afaff76c5dae86af32b59d8a16e5a)
       '@supabase/ssr':
         specifier: ^0.12.7
         version: 0.12.7(@supabase/supabase-js@2.117.2)
       '@supabase/supabase-js':
         specifier: ^2.117.2
         version: 2.117.2
+      '@total-typescript/ts-reset':
+        specifier: ^0.6.1
+        version: 0.6.1
       '@types/node':
         specifier: ^26.0.1
         version: 26.1.1
@@ -220,7 +223,7 @@ importers:
         version: 2.5.15
       '@rtorcato/repo-tooling':
         specifier: ^3.7.3
-        version: 3.7.3(3393e49f3d7d89c4c26f58e124baca87)
+        version: 3.7.3(260afaff76c5dae86af32b59d8a16e5a)
       '@supabase/ssr':
         specifier: ^0.12.7
         version: 0.12.7(@supabase/supabase-js@2.117.2)
@@ -235,7 +238,7 @@ importers:
         version: 19.3.0
       next:
         specifier: ^16.0.0
-        version: 16.2.10(@playwright/test@1.63.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 16.2.10(@babel/core@7.29.7)(@playwright/test@1.63.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       publint:
         specifier: ^0.3.25
         version: 0.3.25
@@ -2209,10 +2212,6 @@ packages:
     resolution: {integrity: sha512-OdWTEiVkY2PHwqkbBI8frFxQQFekHaSSkUIJkwzclWZe64O1X4UlUjqqqLaPbUpMOQk6FBu/HtlGXNblIs0huw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [wasm32]
-
-  '@img/sharp-wasm32@0.35.5':
-    resolution: {integrity: sha512-Ptsga1su4tQx+LLF1ECS9U6nz5kmrXKo6XVbtR48Ke3ZRxxgaWBu7IDtEe1quo8hiupwm6WFqxVlXaSf7IINGQ==}
-    engines: {node: '>=20.9.0'}
 
   '@img/sharp-webcontainers-wasm32@0.35.5':
     resolution: {integrity: sha512-hfhF/FmoQyTUkA0bIKFOtw536BQSeBMe6BF6QyWlrPxT754+TFLaZ7sKKTfvvM0yJgKgaYTwnFCIZ/GuDw5SUA==}
@@ -4304,6 +4303,9 @@ packages:
   '@szmarczak/http-timer@5.0.1':
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
+
+  '@total-typescript/ts-reset@0.6.1':
+    resolution: {integrity: sha512-cka47fVSo6lfQDIATYqb/vO1nvFfbPw7uWLayIXIhGETj0wcOOlrlkobOMDNQOFr9QOafegUPq13V2+6vtD7yg==}
 
   '@tybys/wasm-util@0.10.4':
     resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
@@ -13376,8 +13378,6 @@ snapshots:
     optional: true
 
   '@img/sharp-freebsd-wasm32@0.35.5':
-    dependencies:
-      '@img/sharp-wasm32': 0.35.5
     optional: true
 
   '@img/sharp-libvips-darwin-arm64@1.2.4':
@@ -13525,14 +13525,7 @@ snapshots:
       '@emnapi/runtime': 1.11.1
     optional: true
 
-  '@img/sharp-wasm32@0.35.5':
-    dependencies:
-      '@emnapi/runtime': 1.11.3
-    optional: true
-
   '@img/sharp-webcontainers-wasm32@0.35.5':
-    dependencies:
-      '@img/sharp-wasm32': 0.35.5
     optional: true
 
   '@img/sharp-win32-arm64@0.34.5':
@@ -14905,7 +14898,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.2':
     optional: true
 
-  '@rtorcato/repo-tooling@3.7.3(3393e49f3d7d89c4c26f58e124baca87)':
+  '@rtorcato/repo-tooling@3.7.3(260afaff76c5dae86af32b59d8a16e5a)':
     dependencies:
       chalk: 5.6.2
       commander: 15.0.0
@@ -14925,6 +14918,7 @@ snapshots:
       '@semantic-release/github': 12.0.10(semantic-release@25.0.5(typescript@5.9.3))
       '@semantic-release/npm': 13.1.5(semantic-release@25.0.5(typescript@5.9.3))
       '@semantic-release/release-notes-generator': 14.1.1(semantic-release@25.0.5(typescript@5.9.3))
+      '@total-typescript/ts-reset': 0.6.1
       '@typescript-eslint/eslint-plugin': 8.71.0(@typescript-eslint/parser@8.71.0(eslint@10.12.0(jiti@2.7.0))(typescript@5.9.3))(eslint@10.12.0(jiti@2.7.0))(typescript@5.9.3)
       '@typescript-eslint/parser': 8.71.0(eslint@10.12.0(jiti@2.7.0))(typescript@5.9.3)
       conventional-changelog-conventionalcommits: 9.3.1
@@ -14941,7 +14935,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rtorcato/repo-tooling@5.5.2(ab6b3415fb2e1ff4c4d69c34927f7f35)':
+  '@rtorcato/repo-tooling@5.5.2(9bef071bdbbbc2695ef837fde8a2d9af)':
     dependencies:
       chalk: 6.0.1
       commander: 15.0.0
@@ -14961,6 +14955,7 @@ snapshots:
       '@semantic-release/github': 12.0.10(semantic-release@25.0.5(typescript@5.9.3))
       '@semantic-release/npm': 13.1.5(semantic-release@25.0.5(typescript@5.9.3))
       '@semantic-release/release-notes-generator': 14.1.1(semantic-release@25.0.5(typescript@5.9.3))
+      '@total-typescript/ts-reset': 0.6.1
       '@typescript-eslint/eslint-plugin': 8.71.0(@typescript-eslint/parser@8.71.0(eslint@10.12.0(jiti@2.7.0))(typescript@5.9.3))(eslint@10.12.0(jiti@2.7.0))(typescript@5.9.3)
       '@typescript-eslint/parser': 8.71.0(eslint@10.12.0(jiti@2.7.0))(typescript@5.9.3)
       conventional-changelog-conventionalcommits: 9.3.1
@@ -15297,6 +15292,8 @@ snapshots:
   '@szmarczak/http-timer@5.0.1':
     dependencies:
       defer-to-connect: 2.0.1
+
+  '@total-typescript/ts-reset@0.6.1': {}
 
   '@tybys/wasm-util@0.10.4':
     dependencies:
@@ -19647,7 +19644,7 @@ snapshots:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  next@16.2.10(@playwright/test@1.63.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  next@16.2.10(@babel/core@7.29.7)(@playwright/test@1.63.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       '@next/env': 16.2.10
       '@swc/helpers': 0.5.15
