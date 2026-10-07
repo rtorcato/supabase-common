@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* v4 does not auto-load the JS config; keep the existing theme + tailwindcss-animate plugin. */
+@config "../tailwind.config.ts";
+
+/* v4 dropped darkMode: ["class"] from the JS config. */
+@custom-variant dark (&:is(.dark *));
 
 @layer base {
   :root {
