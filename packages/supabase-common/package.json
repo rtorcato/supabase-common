@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
-    "@rtorcato/repo-tooling": "^3.7.3",
+    "@rtorcato/repo-tooling": "^5.5.2",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.2",
     "@total-typescript/ts-reset": "^0.6.1",
