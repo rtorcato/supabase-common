@@ -10,3 +10,9 @@ allowBuilds:
   # Pulled in transitively by the demo app's eslint-config-next. Our pipeline
   # never runs the demo's ESLint, so its native build isn't needed here.
   unrs-resolver: false
+
+# Security overrides (#120). Docusaurus 3.10 still pins these vulnerable majors;
+# drop each one once an upstream Docusaurus release moves past it.
+overrides:
+  tinypool@1: ^2.1.2
+  serialize-javascript@6: ^7.0.3
