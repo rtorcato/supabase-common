@@ -8,7 +8,6 @@
  * deps.
  */
 import { createServerClient as createServerClientBase } from '@rtorcato/supabase-common/client'
-import { cookies } from 'next/headers'
 import { type NextRequest, NextResponse } from 'next/server'
 import { isPublicPathDefault } from './policy.js'
 
@@ -24,6 +23,10 @@ export { createBrowserClient } from '@rtorcato/supabase-common/client'
  *   const supabase = await createServerClient(url, anonKey)
  */
 export async function createServerClient(supabaseUrl: string, supabaseKey: string) {
+	// Lazy so middleware/proxy (updateSession) can import this module: Next
+	// rejects a top-level next/headers import outside Server Components. The
+	// .js suffix lets plain Node resolve it too (next has no exports map).
+	const { cookies } = await import('next/headers.js')
 	const cookieStore = await cookies()
 	return createServerClientBase(supabaseUrl, supabaseKey, {
 		getAll() {
