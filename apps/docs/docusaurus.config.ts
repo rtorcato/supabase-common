@@ -15,7 +15,7 @@ const config: Config = {
 		'Tree-shakeable TypeScript helpers for Supabase — dependency-free core, optional client factories.',
 	favicon: 'img/favicon.svg',
 
-	url: 'https://rtorcato.github.io',
+	url: 'https://docs.torcato.dev',
 	baseUrl: '/supabase-common/',
 
 	organizationName: 'rtorcato',
