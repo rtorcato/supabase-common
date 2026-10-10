@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/rtorcato/supabase-common.git"
   },
-  "homepage": "https://rtorcato.github.io/supabase-common",
+  "homepage": "https://docs.torcato.dev/supabase-common/",
   "bugs": {
     "url": "https://github.com/rtorcato/supabase-common/issues"
   },

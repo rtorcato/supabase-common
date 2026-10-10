@@ -4,7 +4,7 @@ Tree-shakeable, mostly dependency-free TypeScript helpers for Supabase — the
 cookie/URL/error/claims boilerplate you'd otherwise copy-paste into every
 project, factored into small packages.
 
-📖 **Docs:** https://rtorcato.github.io/supabase-common
+📖 **Docs:** https://docs.torcato.dev/supabase-common/
 
 ## Packages
 

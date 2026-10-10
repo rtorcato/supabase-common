@@ -9,7 +9,7 @@
 
 > Shared, tree-shakeable TypeScript helpers for Supabase, part of the `@rtorcato/*` family.
 
-📖 **Docs:** https://rtorcato.github.io/supabase-common
+📖 **Docs:** https://docs.torcato.dev/supabase-common/
 
 ## Description
 
