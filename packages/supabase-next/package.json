@@ -46,7 +46,7 @@
   "devDependencies": {
     "@rtorcato/repo-tooling": "^6.0.0",
     "@supabase/ssr": "^0.12.7",
-    "@supabase/supabase-js": "^2.117.2",
+    "@supabase/supabase-js": "^2.117.3",
     "next": "^16.4.0",
     "react": "^19.3.0",
     "typescript": "^5.6.3",
