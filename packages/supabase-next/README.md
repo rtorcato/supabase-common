@@ -1,3 +1,10 @@
+<!-- brand-kit:banner:start -->
+<picture>
+  <source media="(max-width: 640px)" srcset="https://raw.githubusercontent.com/rtorcato/supabase-common/main/brand/banner-mobile.png">
+  <img src="https://raw.githubusercontent.com/rtorcato/supabase-common/main/brand/banner.png" alt="supabase-common banner" width="1600">
+</picture>
+<!-- brand-kit:banner:end -->
+
 # @rtorcato/supabase-next
 
 > Next.js App Router helpers for Supabase SSR — part of the `@rtorcato/*` family.
