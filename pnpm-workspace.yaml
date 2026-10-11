@@ -11,6 +11,9 @@ allowBuilds:
   # never runs the demo's ESLint, so its native build isn't needed here.
   unrs-resolver: false
 
+minimumReleaseAgeExclude:
+  - '@rtorcato/shared-docs@1.15.1'
+
 # Security overrides (#120). Docusaurus 3.10 still pins these vulnerable majors;
 # drop each one once an upstream Docusaurus release moves past it.
 overrides:

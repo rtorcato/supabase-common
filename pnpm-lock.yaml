@@ -165,8 +165,8 @@ importers:
         specifier: ^1.63.0
         version: 1.63.0
       '@rtorcato/shared-docs':
-        specifier: ^1.13.1
-        version: 1.13.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: ^1.15.1
+        version: 1.15.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@types/node':
         specifier: ^26.0.1
         version: 26.6.4
@@ -3636,8 +3636,8 @@ packages:
       vitest:
         optional: true
 
-  '@rtorcato/shared-docs@1.13.1':
-    resolution: {integrity: sha512-XqkOYSncTTRJDfVBqZAkK1s7tT4x7wsFrp9jOmePOjwsGpaketWlsFTPQShvGTppw4ZhPm9pJ43ooVD6W1UgSw==}
+  '@rtorcato/shared-docs@1.15.1':
+    resolution: {integrity: sha512-WKCswyEKtvBtsksmdCEf53kEEI9oo9H2NwYp8TXVwvEaueIVVYvjSy0D/eyDUFcQsh3SnULssfVHpWZP201Emw==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -14307,7 +14307,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@rtorcato/shared-docs@1.13.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@rtorcato/shared-docs@1.15.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     optionalDependencies:
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
