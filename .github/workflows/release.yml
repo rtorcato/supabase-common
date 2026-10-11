@@ -66,12 +66,15 @@ jobs:
       # With pending changesets this opens or updates the "Version Packages" PR
       # and publishes nothing. Merging that PR publishes nothing either; the
       # next dispatch or milestone close (approved) publishes the bumped packages.
+      # v2 needs Changesets CLI v3 and reads published packages from the
+      # CHANGESETS_OUTPUT file it passes down, not from stdout; v1 can't, so it
+      # would publish without tags or GitHub releases. v2 only takes a custom
+      # token through `github-token`, never the GITHUB_TOKEN env.
       - name: 🚀 Changesets — version PR or publish
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
-          version: pnpm changeset version
-          publish: pnpm changeset publish
-          commit: 'chore: version packages'
-          title: 'chore: version packages'
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          version-script: pnpm changeset version
+          publish-script: pnpm changeset publish
+          commit-message: 'chore: version packages'
+          pr-title: 'chore: version packages'
+          github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
