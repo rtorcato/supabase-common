@@ -11,6 +11,8 @@ Tree-shakeable, mostly dependency-free TypeScript helpers for Supabase — the
 cookie/URL/error/claims boilerplate you'd otherwise copy-paste into every
 project, factored into small packages.
 
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/rtorcato)
+
 📖 **Docs:** https://docs.torcato.dev/supabase-common/
 
 ## Packages
