@@ -1,3 +1,10 @@
+<!-- brand-kit:banner:start -->
+<picture>
+  <source media="(max-width: 640px)" srcset="./brand/banner-mobile.png">
+  <img src="./brand/banner.png" alt="supabase-common-monorepo banner" width="1600">
+</picture>
+<!-- brand-kit:banner:end -->
+
 # supabase-common
 
 Tree-shakeable, mostly dependency-free TypeScript helpers for Supabase — the
