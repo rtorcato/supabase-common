@@ -1,0 +1,13 @@
+{
+  "name": "supabase-common",
+  "description": "Guidance for using @rtorcato/supabase-common: unwrapping { data, error } results, error-code predicates and toHttpStatus, pagination, Storage URL builders, unverified claims, Realtime naming and the /client factories.",
+  "author": {
+    "name": "Richard Torcato",
+    "email": "rtorcato@me.com",
+    "url": "https://github.com/rtorcato"
+  },
+  "homepage": "https://docs.torcato.dev/supabase-common/",
+  "repository": "https://github.com/rtorcato/supabase-common",
+  "license": "MIT",
+  "keywords": ["supabase", "postgrest", "ssr", "storage", "realtime", "typescript"]
+}

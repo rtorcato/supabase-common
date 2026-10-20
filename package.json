@@ -12,7 +12,9 @@
   "scripts": {
     "build": "pnpm --filter \"./packages/*\" build",
     "verify": "pnpm --filter \"./packages/*\" verify",
-    "check": "biome check .",
+    "check": "biome check . && pnpm check:agents",
+    "sync:agents": "node scripts/sync-agents.mjs",
+    "check:agents": "node scripts/sync-agents.mjs --check",
     "check:fix": "biome check --fix .",
     "knip": "knip",
     "test": "pnpm --filter \"./packages/*\" exec vitest run",

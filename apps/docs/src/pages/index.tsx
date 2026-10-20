@@ -2,6 +2,7 @@ import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import InstallTabs from '@rtorcato/shared-docs/components/InstallTabs'
 import Siblings from '@rtorcato/shared-docs/components/Siblings'
+import UseWithAI from '@rtorcato/shared-docs/components/UseWithAI'
 import CodeBlock from '@theme/CodeBlock'
 import Layout from '@theme/Layout'
 import type { ReactElement } from 'react'
@@ -37,6 +38,12 @@ export default function Home(): ReactElement {
 						<InstallTabs pkg="@rtorcato/supabase-common" />
 					</div>
 				</section>
+				<UseWithAI
+					repo="rtorcato/supabase-common"
+					plugin="supabase-common"
+					skill="supabase-common"
+					pkg="@rtorcato/supabase-common"
+				/>
 				<Siblings self="@rtorcato/supabase-common" />
 			</main>
 		</Layout>

@@ -210,6 +210,32 @@ const admin = createClient(url, serviceRoleKey, { auth: { persistSession: false 
 
 The package is ESM-only and targets Node.js ≥22.
 
+## Use with AI
+
+A skill ships with the repo so AI coding tools use supabase-common the way it's
+meant to be used: the two entry points, unwrapping `{ data, error }` results,
+classifying errors by code, and each helper's API.
+
+**Any agent with the [`skills`](https://www.npmjs.com/package/skills) CLI**: install it
+straight from GitHub, no clone, no package install:
+
+```bash
+npx skills add https://github.com/rtorcato/supabase-common --skill supabase-common
+```
+
+**[Claude Code](https://claude.com/claude-code)**: register the marketplace once, then
+install the plugin:
+
+```sh
+/plugin marketplace add rtorcato/supabase-common
+/plugin install supabase-common@supabase-common
+```
+
+**Other tools (Cursor, Copilot, Codex)**: `@rtorcato/supabase-common` ships an
+[`AGENTS.md`](AGENTS.md) with the same rules. Agents that read `AGENTS.md` pick it up from
+`node_modules/@rtorcato/supabase-common/`, or copy the rules into your project's
+agent config.
+
 ## Development
 
 ```bash
