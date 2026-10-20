@@ -50,14 +50,24 @@ All exports come from the root unless noted.
 
 **API route: read one row, map errors to a status:**
 ```ts
-import { isSupabaseError, toHttpStatus, unwrap } from '@rtorcato/supabase-common'
+import { toHttpStatus, unwrap } from '@rtorcato/supabase-common'
+
+// Never send err.message to the client: it names tables, constraints and policies.
+const MESSAGES: Record<number, string> = {
+  400: 'Invalid request',
+  401: 'Not signed in',
+  403: 'Forbidden',
+  404: 'Not found',
+  409: 'Conflict',
+  503: 'Try again',
+}
 
 try {
   const user = unwrap(await supabase.from('users').select().eq('id', id).single())
   return Response.json(user)
 } catch (err) {
-  const message = isSupabaseError(err) ? err.message : 'Internal error'
-  return Response.json({ error: message }, { status: toHttpStatus(err) })
+  const status = toHttpStatus(err)
+  return Response.json({ error: MESSAGES[status] ?? 'Internal error' }, { status })
 }
 ```
 
