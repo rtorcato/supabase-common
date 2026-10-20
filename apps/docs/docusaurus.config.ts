@@ -103,14 +103,12 @@ const config: Config = {
 			respectPrefersColorScheme: true,
 		},
 		navbar: {
-			// The wordmark (light + dark SVG) carries the "supabase-common" name,
-			// so the text title stays empty to avoid rendering it twice.
-			title: '',
+			title: 'supabase-common',
 			logo: {
 				alt: 'supabase-common',
 				src: 'img/logo.svg',
 				srcDark: 'img/logo-dark.svg',
-				width: 190,
+				width: 26,
 				height: 26,
 			},
 			items: [

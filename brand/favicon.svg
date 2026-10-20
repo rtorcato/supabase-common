@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="supabase-common">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="supabase-common">
   <title>supabase-common</title>
-  <rect width="32" height="32" rx="7" fill="#0a0f14"/>
-  <path d="M17.6 5 8 17.4a1 1 0 0 0 .8 1.6H15l-.6 8.4a.6.6 0 0 0 1.1.4L25 15.4a1 1 0 0 0-.8-1.6H18l.6-8.4A.6.6 0 0 0 17.6 5Z" fill="#3ECF8E"/>
+  <!-- lucide zap, ISC -->
+  <rect width="32" height="32" rx="8" fill="#3ecf8e"/>
+  <svg aria-hidden="true" x="6.72" y="6.72" width="18.56" height="18.56" viewBox="0 0 24 24" fill="none" stroke="#0A0E16" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
 </svg>
