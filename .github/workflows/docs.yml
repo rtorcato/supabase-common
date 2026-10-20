@@ -20,7 +20,7 @@ jobs:
   cloudflare:
     permissions:
       contents: read
-    uses: rtorcato/repo-tooling/.github/workflows/docs-deploy-cloudflare.yml@v6.0.0
+    uses: rtorcato/repo-tooling/.github/workflows/docs-deploy-cloudflare.yml@v6.0.1
     with:
       build-filter: '@rtorcato/supabase-common-docs'
       worker-name: supabase-common-docs
