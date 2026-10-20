@@ -11,13 +11,13 @@
 
 /* ---------- Light (default) ---------- */
 :root {
-	--ifm-color-primary: #199862;
-	--ifm-color-primary-dark: #17895a;
-	--ifm-color-primary-darker: #168154;
-	--ifm-color-primary-darkest: #126b46;
-	--ifm-color-primary-light: #1ba76b;
-	--ifm-color-primary-lighter: #1eb072;
-	--ifm-color-primary-lightest: #2bc686;
+	--ifm-color-primary: #147a4c;
+	--ifm-color-primary-dark: #126e44;
+	--ifm-color-primary-darker: #116841;
+	--ifm-color-primary-darkest: #0e5535;
+	--ifm-color-primary-light: #168654;
+	--ifm-color-primary-lighter: #178c57;
+	--ifm-color-primary-lightest: #1a9f63;
 
 	--ifm-font-family-base: "Geist", system-ui, -apple-system, sans-serif;
 	--ifm-font-family-monospace: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
@@ -29,10 +29,10 @@
 	--ifm-navbar-background-color: rgba(255, 255, 255, 0.8);
 	--ifm-heading-color: #0b1120;
 	--ifm-font-color-base: #35404f;
-	--ifm-link-color: #199862;
+	--ifm-link-color: #147a4c;
 	--ifm-toc-border-color: rgba(12, 20, 18, 0.1);
 	--ifm-code-background: #f2f8f5;
-	--docusaurus-highlighted-code-line-bg: rgba(25, 152, 98, 0.12);
+	--docusaurus-highlighted-code-line-bg: rgba(20, 122, 76, 0.12);
 }
 
 /* ---------- Dark ---------- */

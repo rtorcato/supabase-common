@@ -53,13 +53,19 @@
 
 .btnPrimary {
 	background: var(--ifm-color-primary);
-	color: #04140d;
+	color: #ffffff;
 }
 
 .btnPrimary:hover {
 	background: var(--ifm-color-primary-dark);
-	color: #04140d;
+	color: #ffffff;
 	text-decoration: none;
+}
+
+/* White fails on the bright dark-mode emerald (#3ecf8e), so keep dark text there. */
+:global(html[data-theme="dark"]) .btnPrimary,
+:global(html[data-theme="dark"]) .btnPrimary:hover {
+	color: #04140d;
 }
 
 .btnGhost {
