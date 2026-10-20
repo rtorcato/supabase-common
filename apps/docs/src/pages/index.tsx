@@ -1,10 +1,12 @@
 import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 import InstallTabs from '@rtorcato/shared-docs/components/InstallTabs'
 import Siblings from '@rtorcato/shared-docs/components/Siblings'
 import UseWithAI from '@rtorcato/shared-docs/components/UseWithAI'
 import CodeBlock from '@theme/CodeBlock'
 import Layout from '@theme/Layout'
+import ThemedImage from '@theme/ThemedImage'
 import type { ReactElement } from 'react'
 import styles from './index.module.css'
 
@@ -15,10 +17,15 @@ const user = unwrap(await supabase.from('users').select().single())`
 
 export default function Home(): ReactElement {
 	const { siteConfig } = useDocusaurusContext()
+	const logo = useBaseUrl('img/logo.svg')
+	const logoDark = useBaseUrl('img/logo-dark.svg')
 	return (
 		<Layout title="supabase-common" description={siteConfig.tagline}>
 			<main>
 				<section className={styles.hero}>
+					<div className={styles.mark}>
+						<ThemedImage sources={{ light: logo, dark: logoDark }} alt="" width={72} height={72} />
+					</div>
 					<h1 className={styles.wordmark}>
 						supabase-<span className={styles.accent}>common</span>
 					</h1>
