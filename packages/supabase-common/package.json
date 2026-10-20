@@ -51,15 +51,15 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
-    "@rtorcato/repo-tooling": "^6.0.0",
+    "@rtorcato/repo-tooling": "^6.1.1",
     "@supabase/ssr": "^0.12.7",
-    "@supabase/supabase-js": "^2.117.2",
+    "@supabase/supabase-js": "^2.118.0",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.5",
     "publint": "^0.3.25",
     "tsup": "^8.0.0",
     "typescript": "^5.6.3",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.5"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
