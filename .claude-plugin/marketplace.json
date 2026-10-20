@@ -1,0 +1,15 @@
+{
+  "name": "supabase-common",
+  "owner": {
+    "name": "Richard Torcato",
+    "email": "rtorcato@me.com"
+  },
+  "description": "Claude Code skill for @rtorcato/supabase-common — typed helpers for Supabase results, errors, pagination, Storage URLs, claims, Realtime and clients.",
+  "plugins": [
+    {
+      "name": "supabase-common",
+      "source": "./",
+      "description": "Guidance for using @rtorcato/supabase-common: unwrapping { data, error } results, error-code predicates and toHttpStatus, pagination, Storage URL builders, unverified claims, Realtime naming and the /client factories."
+    }
+  ]
+}

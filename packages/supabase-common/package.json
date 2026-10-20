@@ -83,6 +83,7 @@
     }
   },
   "files": [
+    "AGENTS.md",
     "dist"
   ],
   "publishConfig": {
