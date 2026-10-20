@@ -9,7 +9,8 @@
     "apps/docs": {
       "ignoreDependencies": [
         "@easyops-cn/docusaurus-search-local",
-        "@easyops-cn/docusaurus-plugin-docusaurus-search-local"
+        "@easyops-cn/docusaurus-plugin-docusaurus-search-local",
+        "@rtorcato/docusaurus-plugin-shared-docs"
       ]
     }
   }
