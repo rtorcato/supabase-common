@@ -14,6 +14,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- js-tooling:badges:end -->
 
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="40">](https://buymeacoffee.com/rtorcato)
+
 > Shared, tree-shakeable TypeScript helpers for Supabase.
 
 📖 **Docs:** https://docs.torcato.dev/supabase-common/
