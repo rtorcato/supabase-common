@@ -7,7 +7,7 @@
 
 # @rtorcato/supabase-next
 
-> Next.js App Router helpers for Supabase SSR — part of the `@rtorcato/*` family.
+> Next.js App Router helpers for Supabase SSR.
 
 The cookie-wiring and middleware boilerplate that `create-next-app -e with-supabase`
 copies into every project, factored into one package. Built on the

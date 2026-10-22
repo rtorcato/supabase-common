@@ -14,14 +14,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- js-tooling:badges:end -->
 
-> Shared, tree-shakeable TypeScript helpers for Supabase, part of the `@rtorcato/*` family.
+> Shared, tree-shakeable TypeScript helpers for Supabase.
 
 📖 **Docs:** https://docs.torcato.dev/supabase-common/
 
 ## Description
 
 `supabase-common` is a collection of small, focused helpers for working with
-Supabase — built the same way as the rest of the `@rtorcato/*` family:
+Supabase — built the same way as the other torcato.dev libraries:
 TypeScript-first, ESM-only, tree-shakeable.
 
 The **core** (`@rtorcato/supabase-common`) is **dependency-free**: its helpers

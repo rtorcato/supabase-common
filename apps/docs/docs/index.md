@@ -11,8 +11,7 @@ sidebar_position: 0
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/@rtorcato/supabase-common)](https://bundlephobia.com/package/@rtorcato/supabase-common)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Small, focused helpers for working with Supabase and PostgREST results — part
-of the `@rtorcato/*` family.
+Small, focused helpers for working with Supabase and PostgREST results.
 
 - **Dependency-free core** — the root helpers operate on the plain
   `{ data, error }` shape every Supabase call returns, so they work with any
