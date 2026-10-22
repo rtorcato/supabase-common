@@ -9,6 +9,8 @@
 
 > Next.js App Router helpers for Supabase SSR.
 
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="40">](https://buymeacoffee.com/rtorcato)
+
 The cookie-wiring and middleware boilerplate that `create-next-app -e with-supabase`
 copies into every project, factored into one package. Built on the
 framework-agnostic factories in
