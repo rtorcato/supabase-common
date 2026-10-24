@@ -23,7 +23,9 @@ export {
 	isRlsViolation,
 	isNotFound,
 	isRetryable,
+	withRetry,
 	toHttpStatus,
+	type WithRetryOptions,
 } from './errors.js'
 export {
 	publicUrl,

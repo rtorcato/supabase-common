@@ -17,6 +17,14 @@ export const PG_ERROR_CODES = {
 	deadlockDetected: '40P01',
 	/** Statement timeout (`query_canceled`). */
 	queryCanceled: '57014',
+	/** PostgREST: could not connect to the database (503) — transient. */
+	connectionFailed: 'PGRST000',
+	/** PostgREST: internal connection error (503) — transient. */
+	connectionError: 'PGRST001',
+	/** PostgREST: schema cache not available yet (503) — transient. */
+	schemaCacheUnavailable: 'PGRST002',
+	/** PostgREST: timed out acquiring a pool connection (504) — transient. */
+	poolTimeout: 'PGRST003',
 	/** PostgREST: query for a single row matched zero rows. */
 	noRows: 'PGRST116',
 	/** PostgREST: JWT expired. */
@@ -66,13 +74,64 @@ export function isNotFound(err: unknown): boolean {
 	return getErrorCode(err) === PG_ERROR_CODES.noRows
 }
 
+const TRANSIENT_CODES: ReadonlySet<string> = new Set([
+	PG_ERROR_CODES.serializationFailure,
+	PG_ERROR_CODES.deadlockDetected,
+	PG_ERROR_CODES.connectionFailed,
+	PG_ERROR_CODES.connectionError,
+	PG_ERROR_CODES.schemaCacheUnavailable,
+	PG_ERROR_CODES.poolTimeout,
+])
+
 /**
- * A transient failure worth retrying: serialization failure or deadlock.
- * Wrap the retry loop yourself; this just tells you the error qualifies.
+ * A transient failure worth retrying: serialization failure, deadlock, or a
+ * PostgREST connection / schema-cache / pool error (`PGRST000`–`PGRST003`, the
+ * 503-class errors the Supabase client's own GET/HEAD retry targets). Network
+ * failures carry no code, so they are not detected here.
+ * Wrap the retry loop yourself, or use {@link withRetry}.
  */
 export function isRetryable(err: unknown): boolean {
 	const code = getErrorCode(err)
-	return code === PG_ERROR_CODES.serializationFailure || code === PG_ERROR_CODES.deadlockDetected
+	return code !== undefined && TRANSIENT_CODES.has(code)
+}
+
+export interface WithRetryOptions {
+	/** Total tries, including the first. Default `3`. */
+	attempts?: number
+	/** Delay before the first retry in ms, doubled each time. Default `200`. */
+	baseDelayMs?: number
+	/** Which errors to retry. Default {@link isRetryable}. */
+	shouldRetry?: (err: unknown) => boolean
+}
+
+/**
+ * Run `fn`, retrying while it fails with a retryable error — thrown, or carried
+ * on a resolved `{ data, error }` result. The supabase-js client already retries
+ * GET/HEAD itself and never retries writes; this is for writes. Backoff is
+ * exponential (no jitter). Returns the last result, or rethrows the last throw.
+ *
+ * A write that fails mid-flight may or may not have committed, so use it for
+ * idempotent writes (upsert, a client-supplied id) or rolled-back errors like
+ * `40001` / `40P01`.
+ *
+ *   await withRetry(() => supabase.from('t').upsert(row))
+ */
+export async function withRetry<T>(
+	fn: () => Promise<T>,
+	options: WithRetryOptions = {}
+): Promise<T> {
+	const { attempts = 3, baseDelayMs = 200, shouldRetry = isRetryable } = options
+	for (let attempt = 1; ; attempt++) {
+		const last = attempt >= attempts
+		try {
+			const result = await fn()
+			const err = (result as { error?: unknown } | null | undefined)?.error
+			if (!err || last || !shouldRetry(err)) return result
+		} catch (thrown) {
+			if (last || !shouldRetry(thrown)) throw thrown
+		}
+		await new Promise((resolve) => setTimeout(resolve, baseDelayMs * 2 ** (attempt - 1)))
+	}
 }
 
 /**
@@ -100,6 +159,10 @@ export function toHttpStatus(err: unknown): number {
 		case PG_ERROR_CODES.serializationFailure:
 		case PG_ERROR_CODES.deadlockDetected:
 		case PG_ERROR_CODES.queryCanceled:
+		case PG_ERROR_CODES.connectionFailed:
+		case PG_ERROR_CODES.connectionError:
+		case PG_ERROR_CODES.schemaCacheUnavailable:
+		case PG_ERROR_CODES.poolTimeout:
 			return 503 // transient — retry
 		default:
 			return 500
