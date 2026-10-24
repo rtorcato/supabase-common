@@ -108,7 +108,7 @@ try {
   throw e
 }
 // Also: isForeignKeyViolation, isNotNullViolation, isCheckViolation, isNotFound,
-// isRetryable (serialization failure / deadlock), getErrorCode, PG_ERROR_CODES.
+// isRetryable (serialization failure / deadlock / PGRST000–003), getErrorCode, PG_ERROR_CODES.
 ```
 
 Or skip the ladder in an API route — `toHttpStatus` maps the error to a status
@@ -119,6 +119,16 @@ retryable, 500 otherwise):
 catch (e) {
   return new Response('Request failed', { status: toHttpStatus(e) })
 }
+```
+
+Retry a write that hit a transient error (the SDK only auto-retries GET/HEAD).
+Use it for idempotent writes — a write that failed mid-flight may have committed:
+
+```ts
+import { withRetry, unwrap } from '@rtorcato/supabase-common'
+
+const row = unwrap(await withRetry(() => supabase.from('t').upsert(data).select().single()))
+// withRetry(fn, { attempts: 3, baseDelayMs: 200, shouldRetry: isRetryable })
 ```
 
 ### Storage URLs
@@ -159,11 +169,14 @@ client, no network. **Does not verify the signature**; for an auth decision use
 the SDK's `auth.getClaims()`.
 
 ```ts
-import { decodeClaims, getUserId, getRole, isExpired } from '@rtorcato/supabase-common'
+import { decodeClaims, getUserId, getRole, getAal, needsMfa, getClaim, isExpired } from '@rtorcato/supabase-common'
 
 const claims = decodeClaims(accessToken) // { sub, role, email, exp, ... } | null
 getUserId(accessToken) // → 'user-123'   (claims?.sub)
 getRole(accessToken)   // → 'authenticated'
+getAal(accessToken)    // → 'aal1' | 'aal2' | undefined
+needsMfa(accessToken)  // → true until the session passed MFA (aal2); fails closed
+getClaim<string>(accessToken, 'tenant_id') // any custom claim, type asserted by you
 if (claims && isExpired(claims)) { /* refresh */ }
 ```
 

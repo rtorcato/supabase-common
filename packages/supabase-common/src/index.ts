@@ -23,7 +23,9 @@ export {
 	isRlsViolation,
 	isNotFound,
 	isRetryable,
+	withRetry,
 	toHttpStatus,
+	type WithRetryOptions,
 } from './errors.js'
 export {
 	publicUrl,
@@ -40,7 +42,11 @@ export {
 	decodeClaims,
 	getUserId,
 	getRole,
+	getAal,
+	needsMfa,
+	getClaim,
 	isExpired,
+	type Aal,
 	type SupabaseClaims,
 } from './claims.js'
 export {

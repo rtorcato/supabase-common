@@ -7,6 +7,9 @@
  * `auth.getClaims()` — a decoded-but-unverified token can be forged.
  */
 
+/** Authenticator assurance level: `aal1` = one factor, `aal2` = MFA verified. */
+export type Aal = 'aal1' | 'aal2'
+
 /** The claims Supabase puts on an access token (open-ended — extra claims pass through). */
 export interface SupabaseClaims {
 	/** User id (`auth.users.id`). */
@@ -20,6 +23,10 @@ export interface SupabaseClaims {
 	/** Issued-at, seconds since epoch. */
 	iat?: number
 	session_id?: string
+	/** Authenticator assurance level — `aal2` once an MFA factor was verified this session. */
+	aal?: Aal
+	/** Authentication methods used for the session (e.g. `password`, `totp`, `recovery_code`). */
+	amr?: { method: string; timestamp?: number }[]
 	app_metadata?: Record<string, unknown>
 	user_metadata?: Record<string, unknown>
 	[claim: string]: unknown
@@ -59,4 +66,25 @@ export function getRole(accessToken: string): string | undefined {
  */
 export function isExpired(claims: SupabaseClaims, nowMs: number = Date.now()): boolean {
 	return typeof claims.exp === 'number' && claims.exp * 1000 <= nowMs
+}
+
+/** The `aal` claim, or `undefined` if the token has none or isn't a JWT. Unverified. */
+export function getAal(accessToken: string): Aal | undefined {
+	return decodeClaims(accessToken)?.aal
+}
+
+/**
+ * Whether this session has not passed MFA yet (`aal` isn't `aal2`) — use it to
+ * gate a step-up prompt. A token with no `aal`, or one that isn't a JWT, counts
+ * as not verified (fails closed). Says nothing about whether the user has a
+ * factor enrolled. Unverified — a UI gate only; enforce server-side with RLS on
+ * `auth.jwt() ->> 'aal'`.
+ */
+export function needsMfa(accessToken: string): boolean {
+	return getAal(accessToken) !== 'aal2'
+}
+
+/** Read one claim by name with a caller-asserted type (not validated), or `undefined`. Unverified. */
+export function getClaim<T = unknown>(accessToken: string, name: string): T | undefined {
+	return decodeClaims(accessToken)?.[name] as T | undefined
 }
