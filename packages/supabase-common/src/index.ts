@@ -39,7 +39,11 @@ export {
 	decodeClaims,
 	getUserId,
 	getRole,
+	getAal,
+	needsMfa,
+	getClaim,
 	isExpired,
+	type Aal,
 	type SupabaseClaims,
 } from './claims.js'
 export {

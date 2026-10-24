@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { decodeClaims, getRole, getUserId, isExpired } from '../src/index.js'
+import {
+	decodeClaims,
+	getAal,
+	getClaim,
+	getRole,
+	getUserId,
+	isExpired,
+	needsMfa,
+} from '../src/index.js'
 
 // Build an unsigned JWT (header.payload.sig) with base64url — no padding, like real tokens.
 const jwt = (claims: object) =>
@@ -44,5 +52,28 @@ describe('isExpired', () => {
 
 	it('treats a missing exp as not expired', () => {
 		expect(isExpired({})).toBe(false)
+	})
+})
+
+describe('getAal / needsMfa', () => {
+	it('reads aal and flags anything short of aal2', () => {
+		expect(getAal(jwt({ aal: 'aal2' }))).toBe('aal2')
+		expect(needsMfa(jwt({ aal: 'aal2' }))).toBe(false)
+		expect(getAal(jwt({ aal: 'aal1' }))).toBe('aal1')
+		expect(needsMfa(jwt({ aal: 'aal1' }))).toBe(true)
+	})
+
+	it('fails closed on a missing aal or a malformed token', () => {
+		expect(getAal(jwt(CLAIMS))).toBeUndefined()
+		expect(needsMfa(jwt(CLAIMS))).toBe(true)
+		expect(needsMfa('garbage')).toBe(true)
+	})
+})
+
+describe('getClaim', () => {
+	it('returns a named claim with the asserted type', () => {
+		expect(getClaim<string>(jwt({ tenant: 't1' }), 'tenant')).toBe('t1')
+		expect(getClaim(jwt({ tenant: 't1' }), 'missing')).toBeUndefined()
+		expect(getClaim('garbage', 'tenant')).toBeUndefined()
 	})
 })
