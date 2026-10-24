@@ -22,14 +22,47 @@ function joinUrl(supabaseUrl: string, ...segments: string[]): string {
 	return `${base}/${path}`
 }
 
+/** Optional object-version and cache-bust query params, named as `@supabase/storage-js` names them. */
+export interface UrlVersionOptions {
+	/** Address a specific object version instead of the current one (`versionId`). */
+	versionId?: string
+	/** Opaque value appended as `cacheNonce` to bypass CDN / browser caches. */
+	cacheNonce?: string
+}
+
+/** Append `cacheNonce` / `versionId` (client order) to a URL that may already carry a query. */
+function withVersionParams(url: string, options?: UrlVersionOptions): string {
+	let out = url
+	if (options?.cacheNonce != null) {
+		out += `${out.includes('?') ? '&' : '?'}cacheNonce=${encodeURIComponent(options.cacheNonce)}`
+	}
+	if (options?.versionId != null) {
+		out += `${out.includes('?') ? '&' : '?'}versionId=${encodeURIComponent(options.versionId)}`
+	}
+	return out
+}
+
 /** Public object URL: `${url}/storage/v1/object/public/${bucket}/${path}`. */
-export function publicUrl(supabaseUrl: string, bucket: string, path: string): string {
-	return joinUrl(supabaseUrl, 'storage/v1/object/public', bucket, path)
+export function publicUrl(
+	supabaseUrl: string,
+	bucket: string,
+	path: string,
+	options?: UrlVersionOptions
+): string {
+	return withVersionParams(joinUrl(supabaseUrl, 'storage/v1/object/public', bucket, path), options)
 }
 
 /** Authenticated object URL — requires a bearer token to fetch. */
-export function authenticatedUrl(supabaseUrl: string, bucket: string, path: string): string {
-	return joinUrl(supabaseUrl, 'storage/v1/object/authenticated', bucket, path)
+export function authenticatedUrl(
+	supabaseUrl: string,
+	bucket: string,
+	path: string,
+	options?: UrlVersionOptions
+): string {
+	return withVersionParams(
+		joinUrl(supabaseUrl, 'storage/v1/object/authenticated', bucket, path),
+		options
+	)
 }
 
 /**
@@ -40,10 +73,14 @@ export function downloadUrl(
 	supabaseUrl: string,
 	bucket: string,
 	path: string,
-	filename?: string
+	filename?: string,
+	options?: UrlVersionOptions
 ): string {
 	const url = publicUrl(supabaseUrl, bucket, path)
-	return url + (filename ? `?download=${encodeURIComponent(filename)}` : '?download')
+	return withVersionParams(
+		url + (filename ? `?download=${encodeURIComponent(filename)}` : '?download'),
+		options
+	)
 }
 
 /** Image transformation options for Supabase's render endpoint. */
