@@ -154,11 +154,14 @@ client, no network. **Does not verify the signature**; for an auth decision use
 the SDK's `auth.getClaims()`.
 
 ```ts
-import { decodeClaims, getUserId, getRole, isExpired } from '@rtorcato/supabase-common'
+import { decodeClaims, getUserId, getRole, getAal, needsMfa, getClaim, isExpired } from '@rtorcato/supabase-common'
 
 const claims = decodeClaims(accessToken) // { sub, role, email, exp, ... } | null
 getUserId(accessToken) // → 'user-123'   (claims?.sub)
 getRole(accessToken)   // → 'authenticated'
+getAal(accessToken)    // → 'aal1' | 'aal2' | undefined
+needsMfa(accessToken)  // → true until the session passed MFA (aal2); fails closed
+getClaim<string>(accessToken, 'tenant_id') // any custom claim, type asserted by you
 if (claims && isExpired(claims)) { /* refresh */ }
 ```
 

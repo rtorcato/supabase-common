@@ -28,7 +28,7 @@ pnpm add @supabase/supabase-js @supabase/ssr   # only if you import the /client 
 
 4. **Map to HTTP once with `toHttpStatus(err)`.** Unique, exclusion and foreign-key violations → 409. Not-null and check → 400. RLS → 403. JWT expired (`PGRST301`) → 401. No rows → 404. Serialization failure, deadlock and statement timeout → 503. Anything else, including non-errors → 500.
 
-5. **`decodeClaims` does not verify the signature.** `decodeClaims`, `getUserId` and `getRole` only base64url-decode the payload. Use them to read a token you already trust (one the SDK just gave you). For an auth decision, verify with the SDK's `supabase.auth.getClaims()` first, because an unverified token can be forged.
+5. **`decodeClaims` does not verify the signature.** `decodeClaims`, `getUserId`, `getRole`, `getAal`, `needsMfa` and `getClaim` only base64url-decode the payload. Use them to read a token you already trust (one the SDK just gave you). For an auth decision, verify with the SDK's `supabase.auth.getClaims()` first, because an unverified token can be forged.
 
 6. **Create one server client per request.** `createServerClient(url, key, cookies)` takes a cookie adapter (`{ getAll, setAll }`) that you supply, so it works with any framework. Don't cache it in a module global. For Next.js App Router, use `@rtorcato/supabase-next` instead: it wires `next/headers` cookies for you and adds `updateSession` for middleware.
 
@@ -42,7 +42,7 @@ All exports come from the root unless noted.
 | Pagination | `range(page, pageSize)`, `paged(result, page, pageSize)`, types `PostgrestListLike`, `PagedResult` | `page` is 1-based. `range` returns the 0-based inclusive `[from, to]` for `.range()`. `paged` returns `{ rows, count, page, pageSize, pageCount, hasMore }`. Without `{ count: 'exact' }`, `count` falls back to `rows.length` |
 | Errors | `PG_ERROR_CODES`, `getErrorCode`, `isUniqueViolation`, `isForeignKeyViolation`, `isNotNullViolation`, `isCheckViolation`, `isRlsViolation`, `isNotFound`, `isRetryable`, `toHttpStatus` | Accept `unknown` |
 | Storage | `publicUrl`, `authenticatedUrl`, `downloadUrl`, `transformUrl`, `parsePublicUrl`, `splitPath`, `storageFolder`, type `TransformOptions` | Pure string builders, no client and no network. Arguments are `(supabaseUrl, bucket, path)`. `transformUrl` takes `{ width?, height?, resize?, quality?, format? }` |
-| Claims | `decodeClaims`, `getUserId`, `getRole`, `isExpired`, type `SupabaseClaims` | Unverified (rule 5). `decodeClaims` returns `null` for a malformed token. `isExpired(claims, nowMs?)` treats a missing `exp` as not expired |
+| Claims | `decodeClaims`, `getUserId`, `getRole`, `getAal`, `needsMfa`, `getClaim`, `isExpired`, types `SupabaseClaims`, `Aal` | Unverified (rule 5). `decodeClaims` returns `null` for a malformed token. `needsMfa(token)` is `true` unless `aal` is `aal2` (fails closed on a missing `aal` or a bad token). `getClaim<T>(token, name)` does not validate `T`. `isExpired(claims, nowMs?)` treats a missing `exp` as not expired |
 | Realtime | `channelName(schema, table, id?)`, `postgresChangesFilter({ table, event?, schema?, filter? })` | `channelName` gives `schema:table[:id]`. The filter defaults to `event: '*'` and `schema: 'public'` |
 | `/client` | `createBrowserClient(url, key)`, `createServerClient(url, key, cookies)`, `createClient(url, key, options?)`, re-exported SDK types | Needs the `@supabase/ssr` and `@supabase/supabase-js` peers |
 
