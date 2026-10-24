@@ -36,6 +36,7 @@ export {
 	splitPath,
 	storageFolder,
 	type TransformOptions,
+	type UrlVersionOptions,
 } from './storage.js'
 export {
 	decodeClaims,

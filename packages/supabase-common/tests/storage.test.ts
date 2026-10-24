@@ -114,3 +114,31 @@ describe('storageFolder', () => {
 		expect(storageFolder('a.png')).toBe('')
 	})
 })
+
+describe('version and cache-bust params', () => {
+	it('append versionId and cacheNonce to publicUrl / authenticatedUrl', () => {
+		expect(publicUrl(URL, 'b', 'a.png', { versionId: 'v1' })).toBe(
+			`${URL}/storage/v1/object/public/b/a.png?versionId=v1`
+		)
+		expect(authenticatedUrl(URL, 'b', 'a.png', { cacheNonce: 'n 1', versionId: 'v1' })).toBe(
+			`${URL}/storage/v1/object/authenticated/b/a.png?cacheNonce=n%201&versionId=v1`
+		)
+	})
+
+	it('chain onto the downloadUrl query', () => {
+		expect(downloadUrl(URL, 'b', 'a.png', undefined, { versionId: 'v1' })).toBe(
+			`${URL}/storage/v1/object/public/b/a.png?download&versionId=v1`
+		)
+		expect(downloadUrl(URL, 'b', 'a.png', 'f.png', { cacheNonce: '7' })).toBe(
+			`${URL}/storage/v1/object/public/b/a.png?download=f.png&cacheNonce=7`
+		)
+	})
+
+	it('leave URLs unchanged without options, and parsePublicUrl still inverts', () => {
+		expect(publicUrl(URL, 'b', 'a.png', {})).toBe(publicUrl(URL, 'b', 'a.png'))
+		expect(parsePublicUrl(publicUrl(URL, 'b', 'a.png', { versionId: 'v1' }))).toEqual({
+			bucket: 'b',
+			path: 'a.png',
+		})
+	})
+})

@@ -146,6 +146,11 @@ publicUrl('https://abc.supabase.co', 'avatars', 'a.png')
 downloadUrl(url, 'docs', 'report.pdf', 'My Report.pdf') // forces a browser download
 authenticatedUrl(url, 'docs', 'x/y.pdf')                // needs a bearer token to fetch
 
+// Optional last argument: a specific object version and/or a cache-bust nonce
+// (query names match @supabase/storage-js: versionId, cacheNonce).
+publicUrl(url, 'avatars', 'a.png', { versionId: 'abc', cacheNonce: String(Date.now()) })
+downloadUrl(url, 'docs', 'r.pdf', undefined, { versionId: 'abc' })
+
 transformUrl(url, 'avatars', 'a.png', { width: 100, height: 100, resize: 'cover' })
 // → …/storage/v1/render/image/public/avatars/a.png?width=100&height=100&resize=cover
 
