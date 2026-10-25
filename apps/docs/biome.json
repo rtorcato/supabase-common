@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
   "root": false,
   "extends": ["@rtorcato/repo-tooling/biome"],
   "files": {
@@ -9,8 +9,10 @@
       "!**/node_modules",
       "!**/docs/api",
       "!**/docs/changelog.md",
-      "!**/test-results/**",
-      "!**/playwright-report/**"
+      "!**/test-results",
+      "!**/playwright-report",
+      "!**/*.md",
+      "!**/*.yaml"
     ]
   },
   "overrides": [
