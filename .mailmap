@@ -1,0 +1,9 @@
+# Re-attributes commits made under a placeholder git identity (see #95).
+#
+# `richardtorcato@example.com` came from a tracked ~/.gitconfig that kept
+# resetting the identity on checkout. example.com is IANA-reserved, so the
+# address can never be verified and GitHub can never re-link those commits.
+# Rewriting history would orphan tags and break every clone, so this maps them
+# instead: git log/shortlog/blame now report one author. GitHub's contribution
+# graph does not honour .mailmap and stays unchanged.
+Richard Torcato <rtorcato@me.com> <richardtorcato@example.com>
