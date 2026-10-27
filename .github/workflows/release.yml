@@ -1,48 +1,111 @@
 name: 🚀 Release
 
-# On demand only, never per merge: a dispatch (hotfix, ad hoc) or a closed
-# milestone ("ship this batch"). Same shape as rtorcato/react-common. This is
-# the only workflow that publishes; ci.yml no longer does.
+# Changesets, batched (rtorcato/repo-tooling#938). Every push to main opens or
+# updates the "Version Packages" PR and publishes nothing. Merging that PR is
+# the release: its push runs the `publish` job, which waits for one `release`
+# approval. A dispatch publishes anything versioned but not yet on npm (hotfix).
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
-  milestone:
-    types: [closed]
 
 # Queue rather than cancel: a newer run waits for the one ahead of it (approval
-# included) instead of killing a publish already in flight.
+# included) instead of killing a publish already in flight
+# (rtorcato/repo-tooling#790).
 concurrency:
   group: release
   cancel-in-progress: false
 
 jobs:
-  release:
-    # Publish only from the default branch; a dispatch from any other branch is
-    # skipped. The `release` environment adds a required-reviewer gate on top.
-    if: github.event_name == 'milestone' || github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+  # No environment: it only opens or updates the Version Packages PR, so it
+  # never asks for an approval.
+  version:
+    # Release only from the default branch; a dispatch from another is skipped.
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
-    # Holds every run until a required reviewer approves it. The npm trusted
-    # publishers must name release.yml and this environment, or the OIDC
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release: ${{ steps.unpublished.outputs.release }}
+    steps:
+      - name: 📦 Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          # RELEASE_TOKEN (admin PAT) lets the action push the Version Packages
+          # branch, and its PR then runs CI; GITHUB_TOKEN-made PRs trigger none.
+          # Falls back to GITHUB_TOKEN when no PAT is set.
+          token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # No publish-script: with changesets pending this opens or updates the
+      # Version Packages PR; with none it does nothing.
+      - name: 📝 Open or update the Version Packages PR
+        id: changesets
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+        with:
+          github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          version-script: pnpm changeset version
+          commit-message: 'chore(release): version packages'
+          pr-title: 'chore(release): version packages'
+
+      # Nothing pending and a version not on npm yet: this push merged the
+      # Version Packages PR (pre mode included: the version is the -beta.N one).
+      - name: 🔎 Check for a version not on npm yet
+        id: unpublished
+        if: steps.changesets.outputs.has-changesets == 'false'
+        run: |
+          release=false
+          for spec in $(pnpm -r ls --depth -1 --json | jq -r '.[] | select(.private != true and .name and .version) | "\(.name)@\(.version)"'); do
+            if out=$(npm view "$spec" version 2>&1); then
+              continue
+            elif printf '%s' "$out" | grep -q E404; then
+              echo "::notice::$spec is not on npm yet"
+              release=true
+            else
+              printf '%s\n' "$out" >&2
+              exit 1
+            fi
+          done
+          echo "release=$release" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: version
+    # The Version Packages PR merge, or a dispatch. Any other push skips this
+    # job, so it never queues an approval request.
+    if: github.event_name == 'workflow_dispatch' || needs.version.outputs.release == 'true'
+    # Holds the run until a required reviewer approves it. npm trusted
+    # publishing is bound to release.yml + this environment, or the OIDC
     # publish fails with E404.
     environment: release
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       id-token: write
     steps:
+      # The commit that triggered the run, not the tip: a changeset merged while
+      # this waited for approval would otherwise make it update the Version
+      # Packages PR instead of publishing.
       - name: 📦 Checkout repository
         uses: actions/checkout@v7
         with:
-          # The tip, not the event's SHA: the job starts after approval, and
-          # main may have moved on while it waited.
-          ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 0
-          # RELEASE_TOKEN (admin PAT) lets the Changesets action push the
-          # "Version Packages" PR / version commit past branch protection;
-          # GITHUB_TOKEN can't. Falls back to GITHUB_TOKEN when no PAT is set.
           token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: 📦 Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           registry-url: 'https://registry.npmjs.org'
@@ -53,28 +116,23 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Build so `changeset publish`'s `npm publish` ships each package's dist
-      # (files: ["dist"]). Provenance comes from the root .npmrc (provenance=true)
-      # + id-token: write.
       - name: 🏗️ Build packages
         run: pnpm build
 
-      # OIDC trusted publishing needs npm CLI >= 11.5.1; the runner ships 10.x.
+      # OIDC trusted publishing needs npm >= 11.5.1; Node 22 bundles npm 10, whose
+      # `npm publish` fails with ENEEDAUTH. Pinned to a range, not `latest`, so a
+      # future npm major can't change publishing unannounced.
       - name: 📦 Upgrade npm for OIDC trusted publishing
-        run: npm install -g npm@latest
+        run: npm install -g npm@^11.5.1
 
-      # With pending changesets this opens or updates the "Version Packages" PR
-      # and publishes nothing. Merging that PR publishes nothing either; the
-      # next dispatch or milestone close (approved) publishes the bumped packages.
-      # v2 needs Changesets CLI v3 and reads published packages from the
-      # CHANGESETS_OUTPUT file it passes down, not from stdout; v1 can't, so it
-      # would publish without tags or GitHub releases. v2 only takes a custom
-      # token through `github-token`, never the GITHUB_TOKEN env.
-      - name: 🚀 Changesets — version PR or publish
+      # Publishes every package whose version is not on npm yet (with the pre
+      # mode tag, e.g. beta), then tags it and creates its GitHub release. No
+      # NPM_TOKEN: OIDC trusted publishing, via `id-token: write` above.
+      - name: 🚀 Publish to npm
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          version-script: pnpm changeset version
           publish-script: pnpm changeset publish
-          commit-message: 'chore: version packages'
-          pr-title: 'chore: version packages'
           github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          version-script: pnpm changeset version
+          commit-message: 'chore(release): version packages'
+          pr-title: 'chore(release): version packages'

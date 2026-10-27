@@ -72,9 +72,9 @@ pnpm check      # biome lint/format check
 
 Releases are managed with [Changesets](https://github.com/changesets/changesets):
 add one with `pnpm changeset`. Releases are batched, so merging to `main` publishes
-nothing. Closing a milestone, or dispatching `release.yml`, waits for approval in the
-`release` environment and then opens the "Version Packages" PR. After that PR merges,
-the next approved run publishes to npm.
+nothing: every push runs `release.yml`, which opens or updates the "Version Packages"
+PR. Merging that PR is the release. Its run waits for one approval in the `release`
+environment, then publishes to npm.
 
 ## License
 
