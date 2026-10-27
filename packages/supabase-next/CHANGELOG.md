@@ -1,5 +1,19 @@
 # @rtorcato/supabase-next
 
+## 0.1.6
+
+### Patch Changes
+
+- 53c19e2: Add brand banner to package READMEs for npm display.
+- 39fc9c4: Fix the built package. `dist/index.js` imported a `./policy.js` that was never emitted, so any import of the package failed with "Module not found". `next/headers` is now loaded lazily inside `createServerClient`, so middleware/proxy files can import `updateSession` without tripping Next's Server-Components-only check.
+- Updated dependencies [53c19e2]
+- Updated dependencies [bc4f016]
+- Updated dependencies [3fa9fc2]
+- Updated dependencies [d141e90]
+- Updated dependencies [0213bf5]
+- Updated dependencies [71f60da]
+  - @rtorcato/supabase-common@1.9.0
+
 ## 0.1.5
 
 ### Patch Changes
