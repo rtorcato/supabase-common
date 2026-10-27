@@ -88,36 +88,3 @@
 .footer {
 	margin-top: 4rem;
 }
-
-/* Phones (below Docusaurus' 996px breakpoint): the "torcato.dev /" breadcrumb
- * squeezes the project title into "supabase-commo". The drawer keeps its own
- * "← torcato.dev" row, so the link isn't lost. Navbar tap targets get a 44px
- * hit area without enlarging the icons. */
-@media (max-width: 996px) {
-	.rt-home-crumb,
-	.rt-home-sep {
-		display: none;
-	}
-
-	.navbar__brand {
-		min-width: 0;
-	}
-
-	.navbar__title {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.navbar__toggle {
-		width: 44px;
-		height: 44px;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.navbar__search-input {
-		min-width: 44px;
-		min-height: 44px;
-	}
-}
