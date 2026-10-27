@@ -12,7 +12,7 @@ allowBuilds:
   unrs-resolver: false
 
 minimumReleaseAgeExclude:
-  - '@rtorcato/shared-docs@1.15.1'
+  - '@rtorcato/shared-docs@1.15.1 || 1.19.0'
 
 # Security overrides (#120). Docusaurus 3.10 still pins these vulnerable majors;
 # drop each one once an upstream Docusaurus release moves past it.
