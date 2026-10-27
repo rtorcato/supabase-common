@@ -5,6 +5,10 @@ export default getConfig(
 		// Both the root and the `./client` subpath in package.json#exports must be
 		// built as entries — newer @rtorcato/repo-tooling no longer auto-derives them.
 		entry: ['src/index.ts', 'src/client.ts'],
+		// The preset defaults to bundle: false, which would leave dist/index.js
+		// importing ./unwrap.js and friends that are never emitted. Deps stay
+		// external via the preset's skipNodeModulesBundle.
+		bundle: true,
 		format: ['cjs', 'esm'],
 		dts: true,
 		clean: true,
