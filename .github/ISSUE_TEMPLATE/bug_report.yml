@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a defect in one of the packages
+labels: [bug]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Which package is affected?
+      options:
+        - "@rtorcato/supabase-common"
+        - "@rtorcato/supabase-next"
+        - "other / not sure"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: A minimal code snippet or steps that trigger the bug.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Package version, Node version, supabase-js version, and Next.js version (if relevant).
+    validations:
+      required: true
