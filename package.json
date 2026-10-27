@@ -17,7 +17,7 @@
     "check:agents": "node scripts/sync-agents.mjs --check",
     "check:fix": "biome check --fix .",
     "knip": "knip",
-    "test": "pnpm --filter \"./packages/*\" exec vitest run",
+    "test": "pnpm --filter \"./packages/*\" exec vitest run && node --test scripts/*.test.mjs",
     "size": "pnpm --filter \"./packages/*\" size",
     "changeset": "changeset",
     "version": "changeset version",
