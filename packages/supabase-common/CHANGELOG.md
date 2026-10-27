@@ -1,5 +1,19 @@
 ## [1.2.1](https://github.com/rtorcato/supabase-common/compare/v1.2.0...v1.2.1) (2026-07-10)
 
+## 1.9.0
+
+### Minor Changes
+
+- bc4f016: Add `getAal`, `needsMfa` and `getClaim` claim helpers, plus the `Aal` type and typed `aal`/`amr` fields on `SupabaseClaims`, so apps can gate MFA step-up without hand-decoding the JWT.
+- 3fa9fc2: `isRetryable` now also covers PostgREST's transient connection errors (`PGRST000`–`PGRST003`), and `toHttpStatus` maps them to 503. New `withRetry(fn, options?)` retries a write that fails with a retryable error (thrown or returned as `{ error }`) with exponential backoff.
+- 71f60da: `publicUrl`, `authenticatedUrl` and `downloadUrl` take an optional `{ versionId, cacheNonce }` argument that adds the same query params `@supabase/storage-js` uses, for object versioning and cache busting. New `UrlVersionOptions` type.
+
+### Patch Changes
+
+- 53c19e2: Add brand banner to package READMEs for npm display.
+- d141e90: Fix the built package. `dist/index.js` imported `./unwrap.js` and the other sibling modules, which were never emitted, so importing the root entry failed with "Cannot find module". Only `./client` worked. The root entry is now bundled.
+- 0213bf5: Ship an `AGENTS.md` in the package with the rules for using it from AI coding tools (Cursor, Copilot, Codex). It is generated from the repo's `skills/supabase-common/SKILL.md`, which also installs with `npx skills add` or as a Claude Code plugin.
+
 ## 1.8.0
 
 ### Minor Changes
