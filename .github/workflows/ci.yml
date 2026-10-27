@@ -183,6 +183,11 @@ jobs:
       - name: 🔍 Validate packages with publint
         run: pnpm --filter "./packages/*" exec publint --strict
 
+      # Brotli size of each exported entry, as a consumer's bundler sees it
+      # (packages/*/.size-limit.cjs holds the budgets).
+      - name: 📏 Check bundle size budgets
+        run: pnpm size
+
       - name: 📦 Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
