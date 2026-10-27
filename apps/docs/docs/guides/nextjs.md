@@ -8,8 +8,8 @@ sidebar_position: 3
 `@rtorcato/supabase-common/client` gives you **framework-agnostic** Supabase
 client factories. For **Next.js App Router**, the sibling package
 [`@rtorcato/supabase-next`](https://www.npmjs.com/package/@rtorcato/supabase-next)
-adds the Next-specific wiring (cookie-bound server client + middleware session
-refresh) that every `create-next-app -e with-supabase` project otherwise copies
+adds the Next-specific wiring (cookie-bound server client + proxy/middleware
+session refresh) that every `create-next-app -e with-supabase` project otherwise copies
 by hand. It keeps `next` out of `supabase-common` so non-Next apps (TanStack,
 SvelteKit, plain Node) aren't forced to install it.
 
@@ -33,7 +33,37 @@ export function getSupabase() {
 }
 ```
 
-## Middleware session refresh
+## Session refresh (`proxy.ts`)
+
+Next 16 renamed the `middleware` file convention to `proxy`, and a
+`middleware.ts` file now prints a deprecation warning. On Next 16 and later,
+put the session refresh in `proxy.ts` at the project root (or in `src/`):
+
+```ts
+// proxy.ts
+import { updateSession } from '@rtorcato/supabase-next'
+import type { NextRequest } from 'next/server'
+
+export async function proxy(request: NextRequest) {
+  return updateSession(request, {
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    // optional overrides (defaults shown):
+    // isPublicPath: (p) => p === '/' || p.startsWith('/login') || p.startsWith('/auth'),
+    // loginPath: '/auth/login',
+  })
+}
+
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+}
+```
+
+### Next 15 and earlier (`middleware.ts`)
+
+Older Next versions don't know about `proxy.ts`. Use the same code in
+`middleware.ts`, with the function named `middleware`. (When you upgrade to
+Next 16, `npx @next/codemod@canary middleware-to-proxy .` renames both for you.)
 
 ```ts
 // middleware.ts

@@ -13,7 +13,8 @@ npm install @rtorcato/supabase-common
 yarn add @rtorcato/supabase-common
 ```
 
-The package is **ESM-only** and targets **Node.js ≥22**.
+The package ships **both ESM and CommonJS** builds, so `import` and `require()`
+both work. It targets **Node.js ≥22**.
 
 The **core** has **no runtime dependencies** — not even `@supabase/supabase-js`.
 Helpers work structurally on the `{ data, error }` result shape, so you keep
