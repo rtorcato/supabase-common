@@ -9,10 +9,13 @@ on:
       - '.github/workflows/docs.yml'
       - 'pnpm-workspace.yaml'
       - 'pnpm-lock.yaml'
-  # Rebuild when a release ships so the changelog page (built from GitHub
+  # Rebuild after the Release workflow so the changelog page (built from GitHub
   # Releases) refreshes; a release adds no commit to main, so `push` never fires.
-  release:
-    types: [published]
+  # Not `release: published`: release.yml creates the release with GITHUB_TOKEN,
+  # and events made by GITHUB_TOKEN trigger no workflows.
+  workflow_run:
+    workflows: ['🚀 Release']
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -22,6 +25,8 @@ jobs:
   # https://docs.torcato.dev/supabase-common/
   # Pinned to a tag, never @main: this job hands over the Cloudflare secrets.
   cloudflare:
+    # A failed or cancelled Release run ships nothing to refresh.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     permissions:
       contents: read
     uses: rtorcato/repo-tooling/.github/workflows/docs-deploy-cloudflare.yml@v6.1.1
@@ -39,8 +44,8 @@ jobs:
   # stub (index.html, plus 404.html so deep links land on the same page there).
   # ponytail: delete these two jobs once Pages is disabled in the repo settings.
   pages-redirect-build:
-    # The redirect stub never changes, and a release runs from a tag ref.
-    if: github.event_name != 'release'
+    # The redirect stub never changes.
+    if: github.event_name != 'workflow_run'
     runs-on: ubuntu-latest
     steps:
       - name: Write redirect stub
@@ -73,7 +78,7 @@ jobs:
 
   pages-redirect-deploy:
     needs: pages-redirect-build
-    if: github.event_name != 'release'
+    if: github.event_name != 'workflow_run'
     runs-on: ubuntu-latest
     concurrency:
       group: pages
