@@ -56,6 +56,12 @@
 	--docusaurus-highlighted-code-line-bg: rgba(62, 207, 142, 0.15);
 }
 
+/* Light code blocks sit on #f2f8f5, which is close to white, so the 1px edge is
+ * what defines the block. Dark mode keeps its own surface. See DESIGN.md → Code blocks. */
+[data-theme="light"] .theme-code-block {
+	border: 1px solid var(--ifm-toc-border-color);
+}
+
 /* Footer (style: 'dark') defaults to a lighter slate — pin it to the navbar
  * background so header and footer read as one surface. */
 [data-theme="dark"] .footer {

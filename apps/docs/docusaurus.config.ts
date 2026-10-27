@@ -1,13 +1,29 @@
 import type * as Preset from '@docusaurus/preset-classic'
 import type { Config } from '@docusaurus/types'
 import { footerCopyright, GITHUB_PROFILE, projectFamilyItems } from '@rtorcato/shared-docs'
-import { themes as prismThemes } from 'prism-react-renderer'
+import { type PrismTheme, themes as prismThemes } from 'prism-react-renderer'
 
 // The @rtorcato open-source family, from the shared single source of truth
 // (@rtorcato/shared-docs). Surfaced as a navbar "Projects" dropdown and in the
 // footer so every sibling site cross-links to the rest — edit the family once
 // in shared-docs and each site picks it up on its next build.
 const PROJECT_FAMILY = projectFamilyItems()
+
+// Light code blocks sit on --ifm-code-background (#f2f8f5), not white, so stock
+// vsLight fails AA there. Later styles win, so the appended entries darken the
+// five token colours that fail. See DESIGN.md → Code blocks.
+const LIGHT_CODE_THEME: PrismTheme = {
+	...prismThemes.vsLight,
+	plain: { ...prismThemes.vsLight.plain, backgroundColor: 'var(--ifm-code-background)' },
+	styles: [
+		...prismThemes.vsLight.styles,
+		{ types: ['comment'], style: { color: '#006b00' } },
+		{ types: ['builtin'], style: { color: '#005a9e' } },
+		{ types: ['number', 'variable', 'inserted'], style: { color: '#06704a' } },
+		{ types: ['attr-name'], style: { color: '#c40000' } },
+		{ types: ['class-name'], style: { color: '#1f6a80' } },
+	],
+}
 
 const config: Config = {
 	title: 'supabase-common',
@@ -169,7 +185,7 @@ const config: Config = {
 			copyright: footerCopyright(),
 		},
 		prism: {
-			theme: prismThemes.vsLight,
+			theme: LIGHT_CODE_THEME,
 			darkTheme: prismThemes.vsDark,
 			additionalLanguages: ['bash', 'json', 'typescript'],
 		},
