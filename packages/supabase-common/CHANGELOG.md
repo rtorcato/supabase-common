@@ -1,5 +1,11 @@
 ## [1.2.1](https://github.com/rtorcato/supabase-common/compare/v1.2.0...v1.2.1) (2026-07-10)
 
+## 1.9.1
+
+### Patch Changes
+
+- 58b0324: Ship the MIT LICENSE file in the published package.
+
 ## 1.9.0
 
 ### Minor Changes
