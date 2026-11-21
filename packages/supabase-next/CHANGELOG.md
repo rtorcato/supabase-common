@@ -1,5 +1,13 @@
 # @rtorcato/supabase-next
 
+## 0.1.7
+
+### Patch Changes
+
+- 58b0324: Ship the MIT LICENSE file in the published package.
+- Updated dependencies [58b0324]
+  - @rtorcato/supabase-common@1.9.1
+
 ## 0.1.6
 
 ### Patch Changes
